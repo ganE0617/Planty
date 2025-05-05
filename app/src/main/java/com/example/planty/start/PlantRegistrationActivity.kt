@@ -25,6 +25,7 @@ class PlantRegistrationActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_USER_NICKNAME = "user_nickname"
         const val EXTRA_USER_ID_TOKEN = "user_id_token"
+        const val EXTRA_USER_EMAIL = "extra_user_email"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
