@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Planty</string>
+    
+    <!-- Login related strings -->
+    <string name="hint_id">아이디를 입력해주세요.</string>
+    <string name="hint_password">비밀번호를 입력해주세요.</string>
+    <string name="button_login">로그인</string>
+    <string name="forgot_password">비밀번호를 잊으셨나요?</string>
+    <string name="button_signup">회원가입</string>
+    <string name="social_login_label"> 또는 </string>
+    <string name="google_login">Google 로그인</string>
+    <string name="kakao_login">Kakao 로그인</string>
+    <string name="naver_login">Naver 로그인</string>
+    <string name="plant_image_description">식물 이미지</string>
+    <string name="login_failed">아이디 또는 비밀번호가 틀렸습니다.</string>
+    <string name="login_button_clicked">로그인 버튼 클릭됨</string>
+    <string name="signup_button_clicked">회원가입 버튼 클릭됨</string>
+    <string name="forgot_password_clicked">비밀번호 찾기 클릭됨</string>
+    <string name="google_login_clicked">Google 로그인 클릭됨</string>
+    <string name="kakao_login_clicked">Kakao 로그인 클릭됨</string>
+    <string name="naver_login_clicked">Naver 로그인 클릭됨</string>
+    
+    <!-- Signup related strings -->
+    <string name="hint_nickname">별명을 입력해주세요.</string>
+    <string name="hint_id_signup">사용할 아이디를 입력해주세요.</string>
+    <string name="hint_password_signup">비밀번호를 입력해주세요.</string>
+    <string name="hint_password_confirm">비밀번호를 다시 입력해주세요.</string>
+    <string name="hint_email">이메일 주소를 입력해주세요.</string>
+    <string name="button_signup_action">가입하기</string>
+    <string name="error_empty_field">필수 입력 항목입니다.</string>
+    <string name="error_password_mismatch">비밀번호가 일치하지 않습니다.</string>
+    <string name="error_invalid_email">올바른 이메일 형식이 아닙니다.</string>
+    <string name="signup_success">회원가입 성공! (API 연동 필요)</string>
+    <string name="signup_failed">회원가입 실패 (API 연동 필요)</string>
+    
+    <!-- Plant registration related strings -->
+    <string name="welcome_plant_registration">%1$s님, 지금 키우고 있는 식물을 알려주세요</string>
+    <string name="hint_plant_type">식물 종류 (예: 토마토, 몬스테라)</string>
+    <string name="hint_plant_nickname">식물 별명</string>
+    <string name="hint_plant_start_date">키우기 시작한 날짜</string>
+    <string name="button_register_plant">등록하기</string>
+    <string name="plant_registration_success">식물 등록 성공! (API 연동 필요)</string>
+    <string name="plant_registration_failed">식물 등록 실패 (API 연동 필요)</string>
+    <string name="select_date">날짜 선택</string>
+    <string name="registration_complete_message">등록이 완료되었어요\n%1$s 확인해보러 갈까요?</string>
+    <string name="button_view_plant">보러가기</string>
+</resources>
