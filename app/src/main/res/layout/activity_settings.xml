@@ -1,74 +1,198 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<!-- res/layout/activity_settings.xml -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:background="#FFFFFF">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:divider="?android:attr/dividerHorizontal"
-        android:showDividers="middle"
-        android:dividerPadding="8dp">
+        android:padding="24dp">
 
-        <!-- 항목 하나 예시 -->
-        <TextView
-            android:id="@+id/notification_settings"
+        <!-- 뒤로가기 -->
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_back"
+            android:contentDescription="@string/setting_back"
+            android:layout_gravity="start" />
+
+        <!-- 프로필 영역 -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="🔔 알림 수신 설정"
-            android:textSize="18sp"
-            android:padding="12dp" />
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp">
 
-        <TextView
-            android:id="@+id/dnd_settings"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="⏰ 방해금지 시간 설정"
-            android:textSize="18sp"
-            android:padding="12dp" />
+            <ImageView
+                android:id="@+id/iv_profile"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/ic_user"
+                android:scaleType="centerCrop" />
 
-        <TextView
-            android:id="@+id/account_settings"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="👤 계정/정보 수정"
-            android:textSize="18sp"
-            android:padding="12dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/setting_user"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp" />
 
-        <TextView
-            android:id="@+id/blocked_users"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="🚫 차단 사용자 관리"
-            android:textSize="18sp"
-            android:padding="12dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/setting_email"
+                android:textColor="#999999"
+                android:textSize="14sp" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/language_settings"
+        <!-- 구분선 -->
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="🌐 언어 설정"
-            android:textSize="18sp"
-            android:padding="12dp" />
+            android:layout_height="1dp"
+            android:background="#EEEEEE"
+            android:layout_marginBottom="16dp" />
 
-        <TextView
-            android:id="@+id/logout"
+        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="🚪 로그아웃"
-            android:textSize="18sp"
-            android:padding="12dp" />
+            android:layout_height="match_parent"
+            android:background="#FFFFFF">
 
-        <TextView
-            android:id="@+id/delete_account"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="❌ 회원 탈퇴"
-            android:textSize="18sp"
-            android:padding="12dp" />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="24dp">
+
+                <!-- 카테고리: 알림 설정 -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/setting_category_notification"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    android:textColor="#888888"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/notification_settings"
+                    style="@style/SettingItemStyle"
+                    android:text="@string/setting_notification"
+                    android:drawableEnd="@drawable/ic_arrow_right"
+                    />
+                <!-- 구분선 -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#EEEEEE"
+                    />
+
+
+                <TextView
+                    android:id="@+id/dnd_settings"
+                    style="@style/SettingItemStyle"
+                    android:text="@string/setting_dnd"
+                    android:drawableEnd="@drawable/ic_arrow_right"/>
+                <!-- 구분선 -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#EEEEEE"
+                    />
+
+                <!-- 카테고리: 사용자 설정 -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/setting_category_user"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    android:textColor="#888888"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/account_settings"
+                    style="@style/SettingItemStyle"
+                    android:text="@string/setting_account"
+                    android:drawableEnd="@drawable/ic_arrow_right"
+                    />
+                <!-- 구분선 -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#EEEEEE"
+                    />
+
+                <TextView
+                    android:id="@+id/blocked_users"
+                    style="@style/SettingItemStyle"
+                    android:text="@string/setting_blocked"
+                    android:drawableEnd="@drawable/ic_arrow_right"
+                    />
+                <!-- 구분선 -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#EEEEEE"
+                    />
+
+                <!-- 카테고리: 기타 -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/setting_category_etc"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    android:textColor="#888888"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/language_settings"
+                    style="@style/SettingItemStyle"
+                    android:text="@string/setting_language"
+                    android:drawableEnd="@drawable/ic_arrow_right"
+                    />
+                <!-- 구분선 -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#EEEEEE"
+                    />
+
+                <TextView
+                    android:id="@+id/logout"
+                    style="@style/SettingItemStyle"
+                    android:text="@string/setting_logout"
+                    android:drawableEnd="@drawable/ic_arrow_right"
+                    />
+                <!-- 구분선 -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#EEEEEE"
+                    />
+
+                <TextView
+                    android:id="@+id/delete_account"
+                    style="@style/SettingItemStyle"
+                    android:text="@string/setting_delete"
+                    android:drawableEnd="@drawable/ic_arrow_right"
+                    />
+                <!-- 구분선 -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#EEEEEE"
+                    />
+            </LinearLayout>
+        </ScrollView>
     </LinearLayout>
-</ScrollView> 
+</ScrollView>
