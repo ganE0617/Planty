@@ -1,103 +1,99 @@
 package com.example.planty.network
 
-import io.github.jan.supabase.auth.auth
-import io.github.jan.supabase.auth.providers.builtin.Email
-import io.github.jan.supabase.auth.user.UserSession
+import android.util.Log
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.serialization.json.buildJsonObject
-import kotlinx.serialization.json.put
 
 sealed class AuthResult {
-    data class Success(val session: UserSession) : AuthResult()
+    object Success : AuthResult()
     data class Error(val message: String) : AuthResult()
 }
 
 class AuthRepository {
-    private val client = SupabaseClient.client
+    private val authService = ApiClient.authService
 
-    fun signUp(email: String, password: String, nickname: String): Flow<AuthResult> = flow {
+    // ✅ 회원가입
+    suspend fun signUp(email: String, password: String, nickname: String): Flow<AuthResult> = flow {
         try {
-            val user = client.auth.signUpWith(Email) {
-                this.email = email
-                this.password = password
-                data = buildJsonObject {
-                    put("nickname", nickname)
-                }
-            }
-
-            val session = client.auth.currentSessionOrNull()
-
-            if (session == null) {
-                emit(AuthResult.Error("로그인 중 오류가 발생했습니다: 세션이 없습니다."))
+            val request = SignupRequest(
+                nickname = nickname,
+                userId = email, // Using email as userId for now
+                userPw = password,
+                email = email
+            )
+            val response = authService.signup(request)
+            if (response.isSuccessful) {
+                response.body()?.let {
+                    if (it.success) {
+                        emit(AuthResult.Success)
+                    } else {
+                        emit(AuthResult.Error(it.message))
+                    }
+                } ?: emit(AuthResult.Error("회원가입 실패"))
             } else {
-                emit(AuthResult.Success(session))
+                response.body()?.let {
+                    emit(AuthResult.Error(it.message))
+                } ?: emit(AuthResult.Error("이미 사용 중인 이메일입니다."))
             }
         } catch (e: Exception) {
-            val errorMessage = when {
-                e.message?.contains("duplicate") == true -> "이미 사용 중인 이메일입니다."
-                e.message?.contains("password") == true -> "비밀번호는 6자 이상이어야 합니다."
-                else -> "회원가입 중 오류가 발생했습니다: ${e.message}"
-            }
-            emit(AuthResult.Error(errorMessage))
+            Log.e("AuthRepository", "회원가입 실패", e)
+            emit(AuthResult.Error(e.message ?: "알 수 없는 오류가 발생했습니다."))
         }
     }
 
-    fun signIn(email: String, password: String): Flow<AuthResult> = flow {
+    // ✅ 로그인
+    suspend fun login(email: String, password: String): Flow<AuthResult> = flow {
         try {
-            client.auth.signInWith(Email) {
-                this.email = email
-                this.password = password
-            }
-
-            val session = client.auth.currentSessionOrNull()
-
-            if (session == null) {
-                emit(AuthResult.Error("로그인 중 오류가 발생했습니다: 세션이 없습니다."))
+            val request = LoginRequest(
+                userId = email,
+                userPw = password
+            )
+            val response = authService.login(request)
+            if (response.isSuccessful) {
+                response.body()?.let {
+                    if (it.success) {
+                        it.token?.let { token ->
+                            TokenManager.saveToken(token)
+                        }
+                        emit(AuthResult.Success)
+                    } else {
+                        emit(AuthResult.Error(it.message))
+                    }
+                } ?: emit(AuthResult.Error("로그인 실패"))
             } else {
-                emit(AuthResult.Success(session))
+                response.body()?.let {
+                    emit(AuthResult.Error(it.message))
+                } ?: emit(AuthResult.Error("이메일 또는 비밀번호가 올바르지 않습니다."))
             }
         } catch (e: Exception) {
-            val errorMessage = when {
-                e.message?.contains("Invalid login credentials") == true -> "이메일 또는 비밀번호가 올바르지 않습니다."
-                else -> "로그인 중 오류가 발생했습니다: ${e.message}"
-            }
-            emit(AuthResult.Error(errorMessage))
+            Log.e("AuthRepository", "로그인 실패", e)
+            emit(AuthResult.Error(e.message ?: "알 수 없는 오류가 발생했습니다."))
         }
     }
 
+    // ✅ 비밀번호 재설정 (이메일 전송)
     fun resetPassword(email: String): Flow<AuthResult> = flow {
         try {
-            client.auth.resetPasswordForEmail(email)
-            emit(AuthResult.Success(client.auth.currentSessionOrNull() ?: throw Exception("No session")))
+            authService.resetPassword(ResetPasswordRequest(email))
+            emit(AuthResult.Success)
         } catch (e: Exception) {
             emit(AuthResult.Error("비밀번호 재설정 중 오류가 발생했습니다: ${e.message}"))
         }
     }
 
-    suspend fun signOut() {
-        try {
-            client.auth.signOut()
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+    // ✅ 로그아웃
+    fun logout() {
+        TokenManager.clearToken()
     }
 
-    fun getCurrentSession(): UserSession? {
-        return try {
-            client.auth.currentSessionOrNull()
-        } catch (e: Exception) {
-            e.printStackTrace()
-            null
-        }
-    }
-
+    // ✅ 현재 사용자 닉네임 불러오기
     fun getCurrentUserNickname(): String? {
         return try {
-            client.auth.currentSessionOrNull()?.user?.userMetadata?.get("nickname") as? String
+            // TODO: API를 통해 현재 사용자 정보를 가져오도록 수정
+            null
         } catch (e: Exception) {
             e.printStackTrace()
             null
         }
     }
-} 
+}

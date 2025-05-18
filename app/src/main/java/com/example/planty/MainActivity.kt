@@ -54,7 +54,8 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "검색 클릭됨 (구현 필요)", Toast.LENGTH_SHORT).show()
         }
         binding.ivLock.setOnClickListener {
-            Toast.makeText(this, "잠금 클릭됨 (구현 필요)", Toast.LENGTH_SHORT).show()
+            Log.d("MainActivity", "Settings icon clicked")
+            Toast.makeText(this, "Opening settings...", Toast.LENGTH_SHORT).show()
             val intent = Intent(this, SettingsActivity::class.java)
             startActivity(intent)
         }

@@ -2,18 +2,19 @@ package com.example.planty.login
 
 import android.content.Intent
 import android.os.Bundle
-import com.example.planty.R
+import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.planty.databinding.ActivitySignupBinding
 import androidx.lifecycle.lifecycleScope
+import com.example.planty.R
+import com.example.planty.databinding.ActivitySignupBinding
 import com.example.planty.network.AuthRepository
 import com.example.planty.network.AuthResult
-import kotlinx.coroutines.flow.collect
+import com.example.planty.plant.PlantRegistrationActivity
 import kotlinx.coroutines.launch
 
-class SignUp : AppCompatActivity() {
+class SignUpActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignupBinding
     private val authRepository = AuthRepository()
@@ -34,7 +35,7 @@ class SignUp : AppCompatActivity() {
 
     private fun performSignup() {
         val nickname = binding.etNickname.text.toString().trim()
-        val email = binding.etIdSignup.text.toString().trim()
+        val email = binding.etEmail.text.toString().trim()
         val password = binding.etPasswordSignup.text.toString().trim()
         val passwordConfirm = binding.etPasswordConfirm.text.toString().trim()
 
@@ -46,16 +47,18 @@ class SignUp : AppCompatActivity() {
             authRepository.signUp(email, password, nickname).collect { result ->
                 when (result) {
                     is AuthResult.Success -> {
-                        Toast.makeText(this@SignUp, "회원가입 성공!", Toast.LENGTH_SHORT).show()
-                        val intent = Intent(this@SignUp, Login::class.java)
+                        Log.d("SignUp", "회원가입 성공 - 첫 식물 등록 화면으로 이동")
+                        Toast.makeText(this@SignUpActivity, "회원가입 성공! 첫 식물을 등록해주세요.", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this@SignUpActivity, PlantRegistrationActivity::class.java)
                         startActivity(intent)
                         finish()
                     }
                     is AuthResult.Error -> {
+                        Log.e("SignUp", "회원가입 실패: ${result.message}")
                         if (result.message.contains("이미 사용 중인 이메일")) {
-                            binding.tilIdSignup.error = result.message
+                            binding.tilEmail.error = result.message
                         } else {
-                            Toast.makeText(this@SignUp, "회원가입 실패: ${result.message}", Toast.LENGTH_LONG).show()
+                            Toast.makeText(this@SignUpActivity, "회원가입 실패: ${result.message}", Toast.LENGTH_LONG).show()
                         }
                     }
                 }
@@ -63,10 +66,9 @@ class SignUp : AppCompatActivity() {
         }
     }
 
-
     private fun validateInput(nickname: String, email: String, pass: String, passConfirm: String): Boolean {
         binding.tilNickname.error = null
-        binding.tilIdSignup.error = null
+        binding.tilEmail.error = null
         binding.tilPasswordSignup.error = null
         binding.tilPasswordConfirm.error = null
 
@@ -77,10 +79,10 @@ class SignUp : AppCompatActivity() {
             isValid = false
         }
         if (email.isEmpty()) {
-            binding.tilIdSignup.error = getString(R.string.error_empty_field)
+            binding.tilEmail.error = getString(R.string.error_empty_field)
             isValid = false
         } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            binding.tilIdSignup.error = getString(R.string.error_invalid_email)
+            binding.tilEmail.error = getString(R.string.error_invalid_email)
             isValid = false
         }
         if (pass.isEmpty()) {
@@ -98,4 +100,4 @@ class SignUp : AppCompatActivity() {
 
         return isValid
     }
-} 
+}

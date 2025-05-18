@@ -7,7 +7,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import com.example.planty.R
-import com.example.planty.MainActivity
+import com.example.planty.login.LoginActivity
 
 class ConfirmLogoutDialog(context: Context) : Dialog(context) {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,8 +21,11 @@ class ConfirmLogoutDialog(context: Context) : Dialog(context) {
         }
 
         findViewById<Button>(R.id.btnConfirm).setOnClickListener {
-            // TODO: 로그아웃 처리 (SharedPreferences 정리 등)
-            val intent = Intent(context, MainActivity::class.java)
+            // 로그아웃 처리: SharedPreferences 초기화
+            val prefs = context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
+            prefs.edit().clear().apply()
+            // 로그인 화면으로 이동 (백스택 초기화)
+            val intent = Intent(context, LoginActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             context.startActivity(intent)
             dismiss()

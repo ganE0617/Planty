@@ -1,74 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<!-- res/layout/activity_settings.xml -->
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:orientation="vertical"
+    android:background="#FAFAF7"
+    tools:context=".settings.SettingsActivity">
 
+    <!-- Top bar with back arrow -->
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:divider="?android:attr/dividerHorizontal"
-        android:showDividers="middle"
-        android:dividerPadding="8dp">
-
-        <!-- 항목 하나 예시 -->
-        <TextView
-            android:id="@+id/notification_settings"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="🔔 알림 수신 설정"
-            android:textSize="18sp"
-            android:padding="12dp" />
-
-        <TextView
-            android:id="@+id/dnd_settings"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="⏰ 방해금지 시간 설정"
-            android:textSize="18sp"
-            android:padding="12dp" />
-
-        <TextView
-            android:id="@+id/account_settings"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="👤 계정/정보 수정"
-            android:textSize="18sp"
-            android:padding="12dp" />
-
-        <TextView
-            android:id="@+id/blocked_users"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="🚫 차단 사용자 관리"
-            android:textSize="18sp"
-            android:padding="12dp" />
-
-        <TextView
-            android:id="@+id/language_settings"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="🌐 언어 설정"
-            android:textSize="18sp"
-            android:padding="12dp" />
-
-        <TextView
-            android:id="@+id/logout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="🚪 로그아웃"
-            android:textSize="18sp"
-            android:padding="12dp" />
-
-        <TextView
-            android:id="@+id/delete_account"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="❌ 회원 탈퇴"
-            android:textSize="18sp"
-            android:padding="12dp" />
+        android:orientation="horizontal"
+        android:paddingTop="24dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:gravity="center_vertical">
+        <ImageView
+            android:id="@+id/back_arrow"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_back"
+            android:tint="#5B7553" />
     </LinearLayout>
-</ScrollView> 
+
+    <!-- Profile section -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center">
+        <ImageView
+            android:id="@+id/profile_image"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/ic_profile"
+            android:background="@drawable/profile_circle_background"
+            android:scaleType="centerCrop"
+            android:layout_gravity="center" />
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/edit_profile"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="-12dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/circle_background"
+        android:padding="4dp"
+        android:src="@drawable/ic_edit" />
+
+    <TextView
+        android:id="@+id/profile_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="이가은"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="4dp"
+        android:textColor="#222" />
+    <TextView
+        android:id="@+id/profile_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@tong0430aa"
+        android:textSize="14sp"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#888" />
+
+    <!-- Settings sections -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#FAFAF7">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
+
+            <!-- 알림 설정 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="알림 설정"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="8dp"
+                android:textColor="#222" />
+            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#EEE" />
+            <LinearLayout android:id="@+id/notification_settings" android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="48dp" android:gravity="center_vertical">
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="알림 수신 설정" android:textSize="16sp" android:textColor="#222" />
+                <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_arrow_forward" android:tint="#B0B0B0" />
+            </LinearLayout>
+            <LinearLayout android:id="@+id/dnd_settings" android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="48dp" android:gravity="center_vertical">
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="방해금지 시간 설정" android:textSize="16sp" android:textColor="#222" />
+                <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_arrow_forward" android:tint="#B0B0B0" />
+            </LinearLayout>
+
+            <!-- 사용자 설정 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="사용자 설정"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="8dp"
+                android:textColor="#222" />
+            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#EEE" />
+            <LinearLayout android:id="@+id/account_settings" android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="48dp" android:gravity="center_vertical">
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="계정 / 정보 관리" android:textSize="16sp" android:textColor="#222" />
+                <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_arrow_forward" android:tint="#B0B0B0" />
+            </LinearLayout>
+            <LinearLayout android:id="@+id/blocked_users" android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="48dp" android:gravity="center_vertical">
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="다른 사용자 관리" android:textSize="16sp" android:textColor="#222" />
+                <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_arrow_forward" android:tint="#B0B0B0" />
+            </LinearLayout>
+
+            <!-- 기타 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="기타"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="8dp"
+                android:textColor="#222" />
+            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#EEE" />
+            <LinearLayout android:id="@+id/language_settings" android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="48dp" android:gravity="center_vertical">
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="언어" android:textSize="16sp" android:textColor="#222" />
+                <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_arrow_forward" android:tint="#B0B0B0" />
+            </LinearLayout>
+
+            <!-- Logout and Delete -->
+            <TextView android:id="@+id/logout" android:layout_width="match_parent" android:layout_height="48dp" android:gravity="center_vertical" android:text="로그아웃" android:textSize="16sp" android:textColor="#222" android:paddingStart="8dp" />
+            <TextView android:id="@+id/delete_account" android:layout_width="match_parent" android:layout_height="48dp" android:gravity="center_vertical" android:text="탈퇴하기" android:textSize="16sp" android:textColor="#B00020" android:paddingStart="8dp" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout> 

@@ -14,17 +14,17 @@ interface ApiService {
     @POST("auth/signup")
     suspend fun signupUser(@Body signupRequest: SignupRequest): Response<SignupResponse>
 }
-
-data class LoginResponse(
-    val success: Boolean,
-    val message: String,
-    val token: String?,
-    val userData: User?,
-    val requiresPlantRegistration: Boolean?
-)
-
-data class SignupResponse(
-    val success: Boolean,
-    val message: String,
-    val errorCode: String?
-) 
+//
+//data class LoginResponse(
+//    val success: Boolean,
+//    val message: String,
+//    val token: String?,
+//    val userData: User?,
+//    val requiresPlantRegistration: Boolean?
+//)
+//
+//data class SignupResponse(
+//    val success: Boolean,
+//    val message: String,
+//    val errorCode: String?
+//)
