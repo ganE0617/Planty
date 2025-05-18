@@ -16,10 +16,20 @@ class PlantRegistrationActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPlantRegistrationBinding
     private val plantRepository = PlantRepository()
 
+    companion object {
+        const val EXTRA_USER_NICKNAME = "extra_user_nickname"
+        const val EXTRA_USER_EMAIL = "extra_user_email"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPlantRegistrationBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val nickname = intent.getStringExtra(EXTRA_USER_NICKNAME) ?: "사용자"
+        val email = intent.getStringExtra(EXTRA_USER_EMAIL)
+
+        // TODO: Initialize UI with nickname and email
 
         setupClickListeners()
     }

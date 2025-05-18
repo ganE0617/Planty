@@ -22,7 +22,7 @@
 
         <!--  MainActivity를 SplashActivity로 추후에 수정  -->
         <activity
-            android:name=".MainActivity"
+            android:name=".SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.Planty">
             <intent-filter>

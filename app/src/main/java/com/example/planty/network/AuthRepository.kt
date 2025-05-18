@@ -1,11 +1,19 @@
 package com.example.planty.network
 
 import android.util.Log
+import com.example.planty.data.LoginRequest
+import com.example.planty.data.ResetPasswordRequest
+import com.example.planty.data.SignupRequest
+import com.example.planty.data.User
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 sealed class AuthResult {
-    object Success : AuthResult()
+    data class Success(
+        val token: String? = null,
+        val userData: User? = null,
+        val requiresPlantRegistration: Boolean = false
+    ) : AuthResult()
     data class Error(val message: String) : AuthResult()
 }
 
@@ -25,7 +33,7 @@ class AuthRepository {
             if (response.isSuccessful) {
                 response.body()?.let {
                     if (it.success) {
-                        emit(AuthResult.Success)
+                        emit(AuthResult.Success())
                     } else {
                         emit(AuthResult.Error(it.message))
                     }
@@ -42,7 +50,7 @@ class AuthRepository {
     }
 
     // ✅ 로그인
-    suspend fun login(email: String, password: String): Flow<AuthResult> = flow {
+    suspend fun signIn(email: String, password: String): Flow<AuthResult> = flow {
         try {
             val request = LoginRequest(
                 userId = email,
@@ -55,7 +63,11 @@ class AuthRepository {
                         it.token?.let { token ->
                             TokenManager.saveToken(token)
                         }
-                        emit(AuthResult.Success)
+                        emit(AuthResult.Success(
+                            token = it.token,
+                            userData = it.userData,
+                            requiresPlantRegistration = it.requiresPlantRegistration ?: false
+                        ))
                     } else {
                         emit(AuthResult.Error(it.message))
                     }
@@ -75,7 +87,7 @@ class AuthRepository {
     fun resetPassword(email: String): Flow<AuthResult> = flow {
         try {
             authService.resetPassword(ResetPasswordRequest(email))
-            emit(AuthResult.Success)
+            emit(AuthResult.Success())
         } catch (e: Exception) {
             emit(AuthResult.Error("비밀번호 재설정 중 오류가 발생했습니다: ${e.message}"))
         }

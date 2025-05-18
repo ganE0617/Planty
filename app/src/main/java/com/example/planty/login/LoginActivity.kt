@@ -8,9 +8,11 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.example.planty.MainActivity
 import com.example.planty.databinding.ActivityLoginBinding
 import com.example.planty.network.AuthRepository
 import com.example.planty.network.AuthResult
+import com.example.planty.plant.PlantRegistrationActivity
 import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
@@ -60,28 +62,28 @@ class LoginActivity : AppCompatActivity() {
     private fun navigateToAppropriateScreen() {
         val requiresPlantReg = checkRequiresPlantRegistration()
 
-//        if (requiresPlantReg) {
-//            val nickname = getStoredUserNickname() ?: "사용자"
-//            val email = getStoredUserEmail()
-//
-//            if (email == null) {
-//                Log.e("LoginActivity", "자동 로그인 실패: 사용자 이메일 정보 없음")
-//                saveLoginState(false, null, null, true)
-//                return
-//            }
-//
-//            val intent = Intent(this, PlantRegistrationActivity::class.java)
-//            intent.putExtra(PlantRegistrationActivity.EXTRA_USER_NICKNAME, nickname)
-//            intent.putExtra(PlantRegistrationActivity.EXTRA_USER_EMAIL, email)
-//            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//            startActivity(intent)
-//            finish()
-//        } else {
-//            val intent = Intent(this, MainActivity::class.java)
-//            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//            startActivity(intent)
-//            finish()
-//        }
+        if (requiresPlantReg) {
+            val nickname = getStoredUserNickname() ?: "사용자"
+            val email = getStoredUserEmail()
+
+            if (email == null) {
+                android.util.Log.e("LoginActivity", "자동 로그인 실패: 사용자 이메일 정보 없음")
+                saveLoginState(false, null, null, true)
+                return
+            }
+
+            val intent = Intent(this, PlantRegistrationActivity::class.java)
+            intent.putExtra(PlantRegistrationActivity.EXTRA_USER_NICKNAME, nickname)
+            intent.putExtra(PlantRegistrationActivity.EXTRA_USER_EMAIL, email)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
+        } else {
+            val intent = Intent(this, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
+        }
     }
 
     private fun saveLoginState(isLoggedIn: Boolean, email: String?, nickname: String?, requiresPlantReg: Boolean?) {
@@ -121,22 +123,22 @@ class LoginActivity : AppCompatActivity() {
             }
             if (!isValid) return@setOnClickListener
 
-//            lifecycleScope.launch {
-//                authRepository.signIn(email, password).collect { result ->
-//                    when (result) {
-//                        is AuthResult.Success -> {
-//                            val nickname = result.session.user?.userMetadata?.get("nickname") as? String ?: "사용자"
-//                            Toast.makeText(this@Login, "로그인 성공!", Toast.LENGTH_SHORT).show()
-//                            saveLoginState(true, email, nickname, true)
-//                            navigateToAppropriateScreen()
-//                        }
-//                        is AuthResult.Error -> {
-//                            Toast.makeText(this@Login, result.message, Toast.LENGTH_SHORT).show()
-//                            saveLoginState(false, null, null, true)
-//                        }
-//                    }
-//                }
-//            }
+            lifecycleScope.launch {
+                authRepository.signIn(email, password).collect { result ->
+                    when (result) {
+                        is AuthResult.Success -> {
+                            val nickname = result.userData?.nickname ?: "사용자"
+                            Toast.makeText(this@LoginActivity, "로그인 성공!", Toast.LENGTH_SHORT).show()
+                            saveLoginState(true, email, nickname, result.requiresPlantRegistration)
+                            navigateToAppropriateScreen()
+                        }
+                        is AuthResult.Error -> {
+                            Toast.makeText(this@LoginActivity, result.message, Toast.LENGTH_SHORT).show()
+                            saveLoginState(false, null, null, true)
+                        }
+                    }
+                }
+            }
         }
 
         binding.btnSignup.setOnClickListener {
