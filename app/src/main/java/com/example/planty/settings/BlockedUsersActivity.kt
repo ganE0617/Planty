@@ -23,7 +23,7 @@ class BlockedUsersActivity : AppCompatActivity() {
             // 차단 해제 로직 (현재는 로컬에서만 제거)
             blockedUsers.remove(user)
             adapter.notifyDataSetChanged()
-            Toast.makeText(this, "$user 차단 해제됨", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.toast_user_unblocked), Toast.LENGTH_SHORT).show()
         }
 
         recyclerView.adapter = adapter

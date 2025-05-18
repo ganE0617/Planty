@@ -14,7 +14,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="이메일"
+            android:text="@string/setting_email"
             android:textSize="16sp"
             android:layout_marginTop="8dp" />
         <TextView
@@ -27,7 +27,7 @@
             android:background="#EEEEEE" />
 
         <TextView
-            android:text="닉네임"
+            android:text="@string/nickname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
@@ -36,17 +36,19 @@
             android:id="@+id/et_nickname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="닉네임 입력" />
+            android:hint="@string/enter_nickname" />
 
         <Button
             android:id="@+id/btn_save_nickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="닉네임 저장"
+            android:text="@string/save_nickname"
+            android:backgroundTint="#557b5c"
             android:layout_marginTop="12dp" />
 
         <TextView
-            android:text="비밀번호 변경"
+            android:text="@string/change_password"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
@@ -55,20 +57,21 @@
             android:id="@+id/et_old_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="기존 비밀번호"
+            android:hint="@string/origin_password"
             android:inputType="textPassword" />
         <EditText
             android:id="@+id/et_new_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="새 비밀번호"
+            android:hint="@string/new_password"
             android:inputType="textPassword" />
 
         <Button
             android:id="@+id/btn_change_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="비밀번호 변경"
+            android:text="@string/change_password"
+            android:backgroundTint="#557b5c"
             android:layout_marginTop="12dp" />
     </LinearLayout>
-</ScrollView> 
+</ScrollView>

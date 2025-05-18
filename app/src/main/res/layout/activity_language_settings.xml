@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="언어 선택"
+        android:text="@string/language_selection"
         android:textSize="18sp"
         android:layout_marginBottom="16dp" />
 
@@ -22,19 +22,20 @@
             android:id="@+id/radio_ko"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="한국어" />
+            android:text="@string/korean" />
 
         <RadioButton
             android:id="@+id/radio_en"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="English" />
+            android:text="@string/english" />
     </RadioGroup>
 
     <Button
         android:id="@+id/btnApplyLanguage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="적용"
+        android:text="@string/apply"
+        android:backgroundTint="#557b5c"
         android:layout_marginTop="24dp" />
 </LinearLayout> 

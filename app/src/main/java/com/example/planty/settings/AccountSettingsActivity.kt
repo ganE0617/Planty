@@ -38,9 +38,9 @@ class AccountSettingsActivity : AppCompatActivity() {
             val nickname = etNickname.text.toString()
             if (nickname.isNotBlank()) {
                 prefs.edit().putString(KEY_NICKNAME, nickname).apply()
-                Toast.makeText(this, "닉네임 저장 완료", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.toast_nickname_saved), Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(this, "닉네임을 입력해주세요", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.toast_enter_nickname), Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -50,9 +50,9 @@ class AccountSettingsActivity : AppCompatActivity() {
 
             // 비밀번호는 지금은 로컬에서만 비교, 추후 서버 연동
             if (oldPw.isBlank() || newPw.isBlank()) {
-                Toast.makeText(this, "비밀번호를 모두 입력해주세요", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.toast_enter_passwords), Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(this, "비밀번호가 변경되었습니다 (모의)", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.toast_password_changed), Toast.LENGTH_SHORT).show()
             }
         }
     }

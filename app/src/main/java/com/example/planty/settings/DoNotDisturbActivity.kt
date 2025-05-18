@@ -45,7 +45,7 @@ class DoNotDisturbActivity : AppCompatActivity() {
                 putInt(KEY_END_MIN, timePickerEnd.minute)
                 apply()
             }
-            Toast.makeText(this, "설정이 저장되었습니다", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.toast_dnd_saved), Toast.LENGTH_SHORT).show()
             finish()
         }
     }

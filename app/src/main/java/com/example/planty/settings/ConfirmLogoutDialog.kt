@@ -14,7 +14,7 @@ class ConfirmLogoutDialog(context: Context) : Dialog(context) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dialog_confirm)
 
-        findViewById<TextView>(R.id.tvDialogMessage).text = "정말 로그아웃 하시겠습니까?"
+        findViewById<TextView>(R.id.tvDialogMessage).text = context.getString(R.string.logout_confirm_message)
 
         findViewById<Button>(R.id.btnCancel).setOnClickListener {
             dismiss()
