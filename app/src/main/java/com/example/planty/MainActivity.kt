@@ -5,18 +5,22 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.example.planty.adapter.PlantAdapter
 import com.example.planty.data.Plant
 import com.example.planty.plantdetail.PlantDetailActivity
 import com.example.planty.R
 import com.example.planty.databinding.ActivityMainBinding
 import com.example.planty.settings.SettingsActivity
+import com.example.planty.network.PlantRepository
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var plantAdapter: PlantAdapter
     private val plantDataList = mutableListOf<Plant>()
+    private val plantRepository = PlantRepository()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,14 +28,30 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        prepareInitalPlantData()
         setupRecyclerView()
+        loadPlants()
         setupOtherClickListeners()
     }
 
-    private fun prepareInitalPlantData() {
-        plantDataList.add(Plant("1", "토토", "열매가 발견되었어요", R.drawable.tlranf))
-        plantDataList.add(Plant("plant_2", "몬스테라", "건강하게 자라고 있어요", R.drawable.tlranf))
+    private fun loadPlants() {
+        lifecycleScope.launch {
+            Log.d("MainActivity", "Starting to load plants")
+            plantRepository.getPlants().collect { plants ->
+                Log.d("MainActivity", "Received plants: ${plants.size}")
+                plantDataList.clear()
+                plants.forEach { plant ->
+                    Log.d("MainActivity", "Plant: id=${plant.id}, name=${plant.name}")
+                    plantDataList.add(Plant(
+                        id = plant.id.toString(),
+                        name = plant.name,
+                        status = "건강하게 자라고 있어요",
+                        imageResId = R.drawable.tlranf
+                    ))
+                }
+                plantAdapter.notifyDataSetChanged()
+                Log.d("MainActivity", "Updated plant list size: ${plantDataList.size}")
+            }
+        }
     }
 
     private fun setupRecyclerView() {
@@ -81,6 +101,7 @@ class MainActivity : AppCompatActivity() {
             putExtra(PlantDetailActivity.Extra_Plant_ID, plantId)
             putExtra(PlantDetailActivity.Extra_Plant_Name, plantName)
             putExtra(PlantDetailActivity.Extra_Plant_Image, plantImageResId)
+            putExtra(PlantDetailActivity.Extra_Show_Live_Stream, true)
         }
         startActivity(intent)
     }

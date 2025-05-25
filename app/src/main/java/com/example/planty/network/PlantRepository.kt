@@ -14,15 +14,26 @@ class PlantRepository {
 
     suspend fun registerPlant(name: String, type: String, wateringCycle: Int): Flow<PlantResult> = flow {
         try {
+            val token = TokenManager.getToken()
+            Log.d("PlantRepository", "Using token for plant registration: $token")
+            if (token == null) {
+                emit(PlantResult.Error("로그인이 필요합니다."))
+                return@flow
+            }
+
             val request = PlantRegistrationRequest(
                 name = name,
                 type = type,
-                wateringCycle = wateringCycle
+                watering_cycle = wateringCycle
             )
-            val response = plantService.registerPlant(request)
+            val response = plantService.registerPlant("Bearer $token", request)
             if (response.isSuccessful) {
                 response.body()?.let {
                     if (it.success) {
+                        // Save the plant data locally if needed
+                        it.plant?.let { plant ->
+                            // TODO: Save plant to local database if needed
+                        }
                         emit(PlantResult.Success)
                     } else {
                         emit(PlantResult.Error(it.message))
@@ -39,14 +50,32 @@ class PlantRepository {
         }
     }
 
-    fun getPlants(): Flow<List<PlantResponse>> = flow {
+    suspend fun getPlants(): Flow<List<Plant>> = flow {
         try {
-            val response = plantService.getPlants()
+            val token = TokenManager.getToken()
+            Log.d("PlantRepository", "Getting plants with token: $token")
+            if (token == null) {
+                Log.e("PlantRepository", "No token found")
+                emit(emptyList())
+                return@flow
+            }
+
+            val response = plantService.getPlants("Bearer $token")
+            Log.d("PlantRepository", "Get plants response code: ${response.code()}")
+            
             if (response.isSuccessful) {
                 response.body()?.let { plants ->
-                    emit(plants)
-                } ?: emit(emptyList())
+                    Log.d("PlantRepository", "Successfully got ${plants.size} plants")
+                    emit(plants.map { it.toPlant() })
+                } ?: run {
+                    Log.e("PlantRepository", "Response body is null")
+                    emit(emptyList())
+                }
             } else {
+                Log.e("PlantRepository", "Failed to get plants: ${response.code()} - ${response.message()}")
+                response.errorBody()?.let {
+                    Log.e("PlantRepository", "Error body: ${it.string()}")
+                }
                 emit(emptyList())
             }
         } catch (e: Exception) {
@@ -57,10 +86,23 @@ class PlantRepository {
 }
 
 data class Plant(
-    val id: String? = null,
+    val id: Int? = null,
     val name: String,
     val type: String,
     val wateringCycle: Int,
-    val lastWatered: Long? = null,
-    val userId: String? = null
-) 
+    val lastWatered: String? = null,
+    val createdAt: String? = null,
+    val ownerId: String? = null
+)
+
+private fun PlantResponse.toPlant(): Plant {
+    return Plant(
+        id = id,
+        name = name,
+        type = type,
+        wateringCycle = wateringCycle,
+        lastWatered = lastWatered,
+        createdAt = createdAt,
+        ownerId = ownerId
+    )
+} 

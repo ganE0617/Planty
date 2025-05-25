@@ -15,6 +15,7 @@ import kotlinx.coroutines.launch
 class PlantRegistrationActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPlantRegistrationBinding
     private val plantRepository = PlantRepository()
+    private var userEmail: String? = null
 
     companion object {
         const val EXTRA_USER_NICKNAME = "extra_user_nickname"
@@ -27,9 +28,11 @@ class PlantRegistrationActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val nickname = intent.getStringExtra(EXTRA_USER_NICKNAME) ?: "사용자"
-        val email = intent.getStringExtra(EXTRA_USER_EMAIL)
+        userEmail = intent.getStringExtra(EXTRA_USER_EMAIL)
 
-        // TODO: Initialize UI with nickname and email
+        // Initialize UI with nickname
+        binding.tvWelcome.text = "안녕하세요, ${nickname}님!"
+        binding.tvWelcomeSub.text = "첫 식물을 등록해주세요."
 
         setupClickListeners()
     }
@@ -45,10 +48,30 @@ class PlantRegistrationActivity : AppCompatActivity() {
         val plantType = binding.etPlantType.text.toString().trim()
         val wateringCycle = binding.etWateringCycle.text.toString().trim().toIntOrNull() ?: 7
 
-        if (plantName.isEmpty() || plantType.isEmpty()) {
-            Toast.makeText(this, "모든 필드를 입력해주세요.", Toast.LENGTH_SHORT).show()
+        if (plantName.isEmpty()) {
+            binding.tilPlantName.error = "식물 이름을 입력해주세요."
             return
+        } else {
+            binding.tilPlantName.error = null
         }
+
+        if (plantType.isEmpty()) {
+            binding.tilPlantType.error = "식물 종류를 입력해주세요."
+            return
+        } else {
+            binding.tilPlantType.error = null
+        }
+
+        if (wateringCycle <= 0) {
+            binding.tilWateringCycle.error = "물주기 주기는 1일 이상이어야 합니다."
+            return
+        } else {
+            binding.tilWateringCycle.error = null
+        }
+
+        // Show loading state
+        binding.btnRegisterPlant.isEnabled = false
+        binding.progressBar.show()
 
         lifecycleScope.launch {
             plantRepository.registerPlant(
@@ -56,11 +79,16 @@ class PlantRegistrationActivity : AppCompatActivity() {
                 type = plantType,
                 wateringCycle = wateringCycle
             ).collect { result ->
+                // Hide loading state
+                binding.btnRegisterPlant.isEnabled = true
+                binding.progressBar.hide()
+
                 when (result) {
                     is PlantResult.Success -> {
                         Toast.makeText(this@PlantRegistrationActivity, "식물이 등록되었습니다!", Toast.LENGTH_SHORT).show()
-                        // 메인 화면으로 이동
+                        // Navigate to main screen
                         val intent = Intent(this@PlantRegistrationActivity, MainActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         startActivity(intent)
                         finish()
                     }

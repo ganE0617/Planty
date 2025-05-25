@@ -3,20 +3,24 @@ package com.example.planty.network
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.POST
 
 interface PlantService {
     @POST("plants")
-    suspend fun registerPlant(@Body request: PlantRegistrationRequest): Response<PlantRegistrationResponse>
+    suspend fun registerPlant(
+        @Header("Authorization") token: String,
+        @Body request: PlantRegistrationRequest
+    ): Response<PlantRegistrationResponse>
 
     @GET("plants")
-    suspend fun getPlants(): Response<List<PlantResponse>>
+    suspend fun getPlants(@Header("Authorization") token: String): Response<List<PlantResponse>>
 }
 
 data class PlantRegistrationRequest(
     val name: String,
     val type: String,
-    val wateringCycle: Int
+    val watering_cycle: Int
 )
 
 data class PlantRegistrationResponse(

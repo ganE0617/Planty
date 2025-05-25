@@ -61,6 +61,7 @@ class AuthRepository {
                 response.body()?.let {
                     if (it.success) {
                         it.token?.let { token ->
+                            Log.d("AuthRepository", "Saving token: $token")
                             TokenManager.saveToken(token)
                         }
                         emit(AuthResult.Success(

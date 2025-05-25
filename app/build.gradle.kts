@@ -78,6 +78,11 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
     
+    // ExoPlayer dependencies
+    implementation("com.google.android.exoplayer:exoplayer-core:2.19.1")
+    implementation("com.google.android.exoplayer:exoplayer-ui:2.19.1")
+    implementation("com.google.android.exoplayer:exoplayer-rtsp:2.19.1")
+    
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
