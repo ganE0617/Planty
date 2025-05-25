@@ -75,6 +75,10 @@
         <activity
             android:name=".plantdetail.PlantDetailActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".plantdetail.PlantStatusActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

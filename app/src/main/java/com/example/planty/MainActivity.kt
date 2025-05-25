@@ -56,16 +56,35 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupRecyclerView() {
         plantAdapter = PlantAdapter(plantDataList) { clickedPlant ->
-            Toast.makeText(this, "${clickedPlant.name} 클릭됨", Toast.LENGTH_SHORT).show()
-            Log.d("MainActivity", "Plant clicked: ${clickedPlant.id}")
+            // 더미 데이터 생성
+            val ledModes = mapOf(
+                "기본모드" to Triple(255, 255, 255),
+                "잎성장모드" to Triple(120, 200, 120),
+                "개화모드" to Triple(255, 180, 200),
+                "열매모드" to Triple(255, 220, 120),
+                "묘목모드" to Triple(180, 255, 180)
+            )
+            val selectedMode = "잎성장모드"
+            val (r, g, b) = ledModes[selectedMode] ?: Triple(255, 255, 255)
+            val soilPercent = (40..80).random()
 
-            startPlantDetailActivity(clickedPlant.id, clickedPlant.name, clickedPlant.imageResId)
+            val intent = Intent(this, com.example.planty.plantdetail.PlantStatusActivity::class.java).apply {
+                putExtra("plant_name", clickedPlant.name)
+                putExtra("plant_type", "방울토마토")
+                putExtra("water_day", "D-7")
+                putExtra("soil_percent", soilPercent)
+                putExtra("led_mode", selectedMode)
+                putExtra("led_r", r)
+                putExtra("led_g", g)
+                putExtra("led_b", b)
+                putExtra("led_strength", 50)
+                putExtra("image_res_id", clickedPlant.imageResId)
+            }
+            startActivity(intent)
         }
-
         binding.rvMyPlants.apply {
             adapter = plantAdapter
         }
-
         Log.d("MainActivity", "RecyclerView 설정 완료. 아이템 개수: ${plantAdapter.itemCount}")
     }
 

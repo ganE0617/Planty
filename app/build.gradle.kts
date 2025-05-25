@@ -83,6 +83,9 @@ dependencies {
     implementation("com.google.android.exoplayer:exoplayer-ui:2.19.1")
     implementation("com.google.android.exoplayer:exoplayer-rtsp:2.19.1")
     
+    // Glide dependencies
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
