@@ -8,8 +8,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object ApiClient {
-    // 개발 환경에서는 로컬호스트 사용
-    private const val BASE_URL = "http://10.0.2.2:8000/"  // Android Emulator에서 localhost 접근용
+    // 운영 환경에서는 도메인 사용
+    private const val BASE_URL = "http://10.0.2.2:8000/"  // 운영 서버 주소
 
     // Create a separate client for token refresh without interceptors
     private val refreshClient = OkHttpClient.Builder()

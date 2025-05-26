@@ -90,7 +90,7 @@ data class Plant(
     val name: String,
     val type: String,
     val wateringCycle: Int,
-    val lastWatered: String? = null,
+    val last_watered: String? = null,
     val createdAt: String? = null,
     val ownerId: String? = null
 )
@@ -101,7 +101,7 @@ private fun PlantResponse.toPlant(): Plant {
         name = name,
         type = type,
         wateringCycle = wateringCycle,
-        lastWatered = lastWatered,
+        last_watered = last_watered,
         createdAt = createdAt,
         ownerId = ownerId
     )

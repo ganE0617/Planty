@@ -47,11 +47,22 @@ class SignUpActivity : AppCompatActivity() {
             authRepository.signUp(email, password, nickname).collect { result ->
                 when (result) {
                     is AuthResult.Success -> {
-                        Log.d("SignUp", "회원가입 성공 - 첫 식물 등록 화면으로 이동")
-                        Toast.makeText(this@SignUpActivity, "회원가입 성공! 첫 식물을 등록해주세요.", Toast.LENGTH_SHORT).show()
-                        val intent = Intent(this@SignUpActivity, PlantRegistrationActivity::class.java)
-                        startActivity(intent)
-                        finish()
+                        authRepository.signIn(email, password).collect { loginResult ->
+                            when (loginResult) {
+                                is AuthResult.Success -> {
+                                    Log.d("SignUp", "회원가입 및 자동 로그인 성공 - 첫 식물 등록 화면으로 이동")
+                                    Toast.makeText(this@SignUpActivity, "회원가입 성공! 첫 식물을 등록해주세요.", Toast.LENGTH_SHORT).show()
+                                    val intent = Intent(this@SignUpActivity, PlantRegistrationActivity::class.java)
+                                    intent.putExtra(PlantRegistrationActivity.EXTRA_USER_NICKNAME, nickname)
+                                    startActivity(intent)
+                                    finish()
+                                }
+                                is AuthResult.Error -> {
+                                    Log.e("SignUp", "자동 로그인 실패: ${loginResult.message}")
+                                    Toast.makeText(this@SignUpActivity, "자동 로그인에 실패했습니다: ${loginResult.message}", Toast.LENGTH_LONG).show()
+                                }
+                            }
+                        }
                     }
                     is AuthResult.Error -> {
                         Log.e("SignUp", "회원가입 실패: ${result.message}")

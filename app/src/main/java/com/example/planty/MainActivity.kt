@@ -14,6 +14,9 @@ import com.example.planty.databinding.ActivityMainBinding
 import com.example.planty.settings.SettingsActivity
 import com.example.planty.network.PlantRepository
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 
 class MainActivity : AppCompatActivity() {
 
@@ -37,13 +40,16 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             Log.d("MainActivity", "Starting to load plants")
             plantRepository.getPlants().collect { plants ->
-                Log.d("MainActivity", "Received plants: ${plants.size}")
+                Log.d("MainActivity", "Received plants: "+plants.size)
                 plantDataList.clear()
                 plants.forEach { plant ->
                     Log.d("MainActivity", "Plant: id=${plant.id}, name=${plant.name}")
                     plantDataList.add(Plant(
                         id = plant.id.toString(),
                         name = plant.name,
+                        type = plant.type,
+                        wateringCycle = plant.wateringCycle,
+                        last_watered = plant.last_watered ?: LocalDate.now().toString(),
                         status = "건강하게 자라고 있어요",
                         imageResId = R.drawable.tlranf
                     ))
@@ -51,6 +57,22 @@ class MainActivity : AppCompatActivity() {
                 plantAdapter.notifyDataSetChanged()
                 Log.d("MainActivity", "Updated plant list size: ${plantDataList.size}")
             }
+        }
+    }
+
+    private fun calculateWaterDay(lastWatered: String, wateringCycle: Int): String {
+        return try {
+            // 다양한 포맷 지원: yyyy-MM-dd, yyyy-MM-ddTHH:mm:ss 등
+            val datePart = lastWatered.substring(0, 10)
+            val lastDate = LocalDate.parse(datePart)
+            val today = LocalDate.now()
+            val daysSince = ChronoUnit.DAYS.between(lastDate, today).toInt()
+            val daysLeft = wateringCycle - daysSince
+            android.util.Log.d("WaterDebug", "lastWatered=$lastWatered, datePart=$datePart, today=$today, daysSince=$daysSince, daysLeft=$daysLeft")
+            if (daysLeft > 0) "D-$daysLeft" else "D-day"
+        } catch (e: Exception) {
+            android.util.Log.e("WaterDebug", "날짜 계산 오류: $e, lastWatered=$lastWatered")
+            "D-?"
         }
     }
 
@@ -71,8 +93,8 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, com.example.planty.plantdetail.PlantStatusActivity::class.java).apply {
                 putExtra("plant_id", clickedPlant.id.toInt())
                 putExtra("plant_name", clickedPlant.name)
-                putExtra("plant_type", "방울토마토")
-                putExtra("water_day", "D-7")
+                putExtra("plant_type", clickedPlant.type)
+                putExtra("water_day", calculateWaterDay(clickedPlant.last_watered, clickedPlant.wateringCycle))
                 putExtra("soil_percent", soilPercent)
                 putExtra("led_mode", selectedMode)
                 putExtra("led_r", r)

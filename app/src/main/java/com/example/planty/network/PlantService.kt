@@ -50,7 +50,7 @@ data class PlantResponse(
     val name: String,
     val type: String,
     val wateringCycle: Int,
-    val lastWatered: String,
+    val last_watered: String,
     val createdAt: String,
     val ownerId: String
 )
