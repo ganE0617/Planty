@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit
 
 object ApiClient {
     // 운영 환경에서는 도메인 사용
-    private const val BASE_URL = "http://10.0.2.2:8000/"  // 운영 서버 주소
+    private const val BASE_URL = "https://planty.gaeun.xyz/"  // 운영 서버 주소
 
     // Create a separate client for token refresh without interceptors
     private val refreshClient = OkHttpClient.Builder()

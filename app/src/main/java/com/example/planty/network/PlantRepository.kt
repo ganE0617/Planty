@@ -26,7 +26,7 @@ class PlantRepository {
                 type = type,
                 watering_cycle = wateringCycle
             )
-            val response = plantService.registerPlant("Bearer $token", request)
+            val response = plantService.registerPlant(request)
             if (response.isSuccessful) {
                 response.body()?.let {
                     if (it.success) {
@@ -60,7 +60,7 @@ class PlantRepository {
                 return@flow
             }
 
-            val response = plantService.getPlants("Bearer $token")
+            val response = plantService.getPlants()
             Log.d("PlantRepository", "Get plants response code: ${response.code()}")
             
             if (response.isSuccessful) {

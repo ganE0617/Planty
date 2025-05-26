@@ -20,7 +20,7 @@ class PlantStatusActivity : AppCompatActivity() {
         "잎 성장" to Triple(191, 0, 64),
         "개화" to Triple(181, 0, 64),
         "열매" to Triple(179, 26, 51),
-        "줄기" to Triple(153, 0, 102)
+        "줄기" to Triple(153, 255, 102)
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,7 +68,7 @@ class PlantStatusActivity : AppCompatActivity() {
         // 서버에서 LED 모드 조회
         CoroutineScope(Dispatchers.Main).launch {
             val plantService = ApiClient.plantService
-            val response = plantService.getPlantLed("Bearer $token", plantId)
+            val response = plantService.getPlantLed(plantId)
             var selectedMode = "통합"
             var selectedRgb = ledModeRgbMap[selectedMode] ?: Triple(172, 26, 56)
             if (response.isSuccessful && response.body()?.success == true && response.body()?.led != null) {
@@ -78,7 +78,7 @@ class PlantStatusActivity : AppCompatActivity() {
             } else {
                 // 없으면 '통합'으로 저장
                 plantService.setPlantLed(
-                    "Bearer $token", plantId,
+                    plantId,
                     PlantLedRequest(plant_id = plantId, mode = selectedMode, r = selectedRgb.first, g = selectedRgb.second, b = selectedRgb.third)
                 )
             }
@@ -95,7 +95,7 @@ class PlantStatusActivity : AppCompatActivity() {
                     modeButtons.forEach { b -> b.isSelected = b == btn }
                     CoroutineScope(Dispatchers.Main).launch {
                         plantService.setPlantLed(
-                            "Bearer $token", plantId,
+                            plantId,
                             PlantLedRequest(plant_id = plantId, mode = mode, r = rgb.first, g = rgb.second, b = rgb.third)
                         )
                     }
