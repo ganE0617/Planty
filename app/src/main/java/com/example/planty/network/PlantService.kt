@@ -5,6 +5,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface PlantService {
     @POST("plants")
@@ -15,6 +16,21 @@ interface PlantService {
 
     @GET("plants")
     suspend fun getPlants(@Header("Authorization") token: String): Response<List<PlantResponse>>
+
+    // LED 모드 저장
+    @POST("plants/{plant_id}/led")
+    suspend fun setPlantLed(
+        @Header("Authorization") token: String,
+        @Path("plant_id") plantId: Int,
+        @Body request: PlantLedRequest
+    ): Response<PlantLedResponse>
+
+    // LED 모드 조회
+    @GET("plants/{plant_id}/led")
+    suspend fun getPlantLed(
+        @Header("Authorization") token: String,
+        @Path("plant_id") plantId: Int
+    ): Response<PlantLedResponse>
 }
 
 data class PlantRegistrationRequest(
@@ -37,4 +53,18 @@ data class PlantResponse(
     val lastWatered: String,
     val createdAt: String,
     val ownerId: String
+)
+
+data class PlantLedRequest(
+    val plant_id: Int,
+    val mode: String,
+    val r: Int,
+    val g: Int,
+    val b: Int
+)
+
+data class PlantLedResponse(
+    val success: Boolean,
+    val message: String,
+    val led: PlantLedRequest?
 ) 

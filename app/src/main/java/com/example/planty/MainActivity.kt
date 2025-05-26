@@ -69,6 +69,7 @@ class MainActivity : AppCompatActivity() {
             val soilPercent = (40..80).random()
 
             val intent = Intent(this, com.example.planty.plantdetail.PlantStatusActivity::class.java).apply {
+                putExtra("plant_id", clickedPlant.id.toInt())
                 putExtra("plant_name", clickedPlant.name)
                 putExtra("plant_type", "방울토마토")
                 putExtra("water_day", "D-7")

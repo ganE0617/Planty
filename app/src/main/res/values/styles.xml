@@ -14,4 +14,47 @@
         <item name="android:background">?attr/selectableItemBackground</item>
     </style>
 
+    <!-- Figma 스타일: 텍스트 -->
+    <style name="FigmaTextTitle">
+        <item name="android:textColor">@color/textPrimary</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@font/inter_18pt_extrabold</item>
+    </style>
+    <style name="FigmaTextBody">
+        <item name="android:textColor">@color/textPrimary</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/inter_18pt_regular</item>
+    </style>
+    <style name="FigmaTextSub">
+        <item name="android:textColor">@color/textSecondary</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/inter_18pt_regular</item>
+    </style>
+
+    <!-- Figma 스타일: 버튼 -->
+    <style name="FigmaButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:background">@drawable/led_mode_button_background</item>
+        <item name="android:textColor">@color/led_mode_button_text_selector</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/inter_18pt_semibold</item>
+        <item name="android:letterSpacing">0.05</item>
+        <item name="android:minHeight">36dp</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:elevation">0dp</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="backgroundTint">@null</item>
+        <item name="android:backgroundTint">@null</item>
+    </style>
+
+    <!-- Figma 스타일: 카드 -->
+    <style name="FigmaCard">
+        <item name="android:background">@color/card</item>
+        <item name="android:clipToOutline">true</item>
+        <item name="android:elevation">2dp</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:radius">16dp</item>
+    </style>
 </resources> 

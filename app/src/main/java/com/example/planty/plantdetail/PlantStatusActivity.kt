@@ -6,11 +6,34 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.planty.R
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import com.example.planty.network.TokenManager
+import com.example.planty.network.ApiClient
+import com.example.planty.network.PlantLedRequest
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import org.json.JSONObject
 
 class PlantStatusActivity : AppCompatActivity() {
+    private val ledModeRgbMap = mapOf(
+        "통합" to Triple(172, 26, 56),
+        "잎 성장" to Triple(191, 0, 64),
+        "개화" to Triple(181, 0, 64),
+        "열매" to Triple(179, 26, 51),
+        "줄기" to Triple(153, 0, 102)
+    )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_plant_status)
+
+        val plantId = intent.getIntExtra("plant_id", -1)
+        val token = com.example.planty.network.TokenManager.getToken()
+        if (plantId == -1 || token == null) {
+            Toast.makeText(this, "식물 정보 또는 토큰이 없습니다.", Toast.LENGTH_SHORT).show()
+            finish()
+            return
+        }
 
         // WebView로 실시간 스트림 표시
         val webView = findViewById<WebView>(R.id.web_stream)
@@ -25,10 +48,6 @@ class PlantStatusActivity : AppCompatActivity() {
         val type = intent.getStringExtra("plant_type") ?: "방울토마토"
         val waterDay = intent.getStringExtra("water_day") ?: "D-7"
         val soilPercent = intent.getIntExtra("soil_percent", 60)
-        val ledMode = intent.getStringExtra("led_mode") ?: "기본모드"
-        val ledR = intent.getIntExtra("led_r", 255)
-        val ledG = intent.getIntExtra("led_g", 255)
-        val ledB = intent.getIntExtra("led_b", 255)
         val ledStrength = intent.getIntExtra("led_strength", 50)
 
         findViewById<TextView>(R.id.tv_nickname).text = nickname
@@ -45,12 +64,43 @@ class PlantStatusActivity : AppCompatActivity() {
             findViewById<Button>(R.id.btn_mode_fruit),
             findViewById<Button>(R.id.btn_mode_seed)
         )
-        modeButtons.forEach { btn ->
-            btn.isSelected = btn.text == ledMode
-            btn.setBackgroundColor(
-                if (btn.isSelected) android.graphics.Color.rgb(ledR, ledG, ledB)
-                else android.graphics.Color.parseColor("#F5F6F8")
-            )
+
+        // 서버에서 LED 모드 조회
+        CoroutineScope(Dispatchers.Main).launch {
+            val plantService = ApiClient.plantService
+            val response = plantService.getPlantLed("Bearer $token", plantId)
+            var selectedMode = "통합"
+            var selectedRgb = ledModeRgbMap[selectedMode] ?: Triple(172, 26, 56)
+            if (response.isSuccessful && response.body()?.success == true && response.body()?.led != null) {
+                val led = response.body()!!.led!!
+                selectedMode = led.mode
+                selectedRgb = Triple(led.r, led.g, led.b)
+            } else {
+                // 없으면 '통합'으로 저장
+                plantService.setPlantLed(
+                    "Bearer $token", plantId,
+                    PlantLedRequest(plant_id = plantId, mode = selectedMode, r = selectedRgb.first, g = selectedRgb.second, b = selectedRgb.third)
+                )
+            }
+            // UI 반영
+            modeButtons.forEach { btn ->
+                btn.isSelected = btn.text == selectedMode
+            }
+
+            // 버튼 클릭 시 서버에 저장
+            modeButtons.forEach { btn ->
+                btn.setOnClickListener {
+                    val mode = btn.text.toString()
+                    val rgb = ledModeRgbMap[mode] ?: Triple(172, 26, 56)
+                    modeButtons.forEach { b -> b.isSelected = b == btn }
+                    CoroutineScope(Dispatchers.Main).launch {
+                        plantService.setPlantLed(
+                            "Bearer $token", plantId,
+                            PlantLedRequest(plant_id = plantId, mode = mode, r = rgb.first, g = rgb.second, b = rgb.third)
+                        )
+                    }
+                }
+            }
         }
 
         val seekBar = findViewById<SeekBar>(R.id.seekbar_led)

@@ -7,4 +7,20 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Figma 스타일 가이드 컬러 -->
+    <color name="primary">#4A7C59</color>
+    <color name="background">#EFF9EB</color>
+    <color name="card">#FEFCF8</color>
+    <color name="card_icon_bg">#F1EEE8</color>
+    <color name="textPrimary">#1F2024</color>
+    <color name="textSecondary">#71727A</color>
+    <color name="button_inactive_bg">#EFF9EB</color>
+    <color name="button_active_bg">#4A7C59</color>
+    <color name="button_inactive_text">#4A7C59</color>
+    <color name="button_active_text">#FFFFFF</color>
+    <color name="slider_bg">#F1EEE8</color>
+    <color name="slider_fill">#4A7C59</color>
+    <color name="led_mode_text">#355C3E</color>
+    <color name="led_mode_selected_text">#FFFFFF</color>
 </resources>
