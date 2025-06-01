@@ -41,7 +41,7 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         // Optional: handle back arrow and edit profile clicks
-        findViewById<android.widget.ImageView>(R.id.back_arrow)?.setOnClickListener {
+        findViewById<android.widget.ImageView>(R.id.back_arrow).setOnClickListener {
             finish()
         }
         findViewById<android.widget.ImageView>(R.id.edit_profile)?.setOnClickListener {

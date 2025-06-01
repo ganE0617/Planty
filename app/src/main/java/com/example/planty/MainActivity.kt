@@ -17,6 +17,12 @@ import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
+import android.view.View
+import android.widget.TextView
+import android.widget.ArrayAdapter
+import android.widget.ListView
+import android.widget.LinearLayout
+import android.widget.ImageView
 
 class MainActivity : AppCompatActivity() {
 
@@ -34,6 +40,38 @@ class MainActivity : AppCompatActivity() {
         setupRecyclerView()
         loadPlants()
         setupOtherClickListeners()
+
+        // 알람 뱃지 예시 (실제 알람 개수로 대체)
+        val alarmCount = getUnreadAlarmCount() // TODO: 실제 알람 개수로 대체
+        val alarmBadge = findViewById<TextView>(R.id.tv_alarm_badge)
+        if (alarmCount > 0) {
+            alarmBadge.text = alarmCount.toString()
+            alarmBadge.visibility = View.VISIBLE
+        } else {
+            alarmBadge.visibility = View.GONE
+        }
+
+        // 알람 아이콘 클릭 시 알람 목록 화면으로 이동
+        findViewById<View>(R.id.iv_alarm).setOnClickListener {
+            val intent = Intent(this, AlarmActivity::class.java)
+            startActivity(intent)
+        }
+
+        // 하단 네비게이션에 설정 탭 연결
+        binding.bottomNavigation.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navigation_home -> true
+                R.id.navigation_community -> true
+                R.id.navigation_stores -> true
+                R.id.navigation_profile -> true
+                R.id.navigation_settings -> {
+                    val intent = Intent(this, SettingsActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
     private fun loadPlants() {
@@ -102,6 +140,8 @@ class MainActivity : AppCompatActivity() {
                 putExtra("led_b", b)
                 putExtra("led_strength", 50)
                 putExtra("image_res_id", clickedPlant.imageResId)
+                putExtra("watering_cycle", clickedPlant.wateringCycle)
+                putExtra("last_watered", clickedPlant.last_watered)
             }
             startActivity(intent)
         }
@@ -115,26 +155,11 @@ class MainActivity : AppCompatActivity() {
         binding.ivSearch.setOnClickListener {
             Toast.makeText(this, "검색 클릭됨 (구현 필요)", Toast.LENGTH_SHORT).show()
         }
-        binding.ivLock.setOnClickListener {
-            Log.d("MainActivity", "Settings icon clicked")
-            Toast.makeText(this, "Opening settings...", Toast.LENGTH_SHORT).show()
-            val intent = Intent(this, SettingsActivity::class.java)
-            startActivity(intent)
-        }
         binding.tvMyPlantsSeeMore.setOnClickListener {
             Toast.makeText(this, "'내 식물 더보기' 클릭됨 (구현 필요)", Toast.LENGTH_SHORT).show()
         }
         binding.tvRecommendedSeeMore.setOnClickListener {
             Toast.makeText(this, "'추천 용품 더보기' 클릭됨 (구현 필요)", Toast.LENGTH_SHORT).show()
-        }
-        binding.bottomNavigation.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.navigation_home -> true
-                R.id.navigation_community -> true
-                R.id.navigation_stores -> true
-                R.id.navigation_profile -> true
-                else -> false
-            }
         }
     }
 
@@ -146,5 +171,35 @@ class MainActivity : AppCompatActivity() {
             putExtra(PlantDetailActivity.Extra_Show_Live_Stream, true)
         }
         startActivity(intent)
+    }
+
+    // 알람 개수 가져오는 함수 (임시)
+    private fun getUnreadAlarmCount(): Int {
+        // TODO: 실제 알람 데이터와 연동
+        return 3 // 예시
+    }
+}
+
+class AlarmActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        // 레이아웃 생성
+        val layout = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+        }
+        // 백 버튼
+        val backArrow = ImageView(this).apply {
+            setImageResource(R.drawable.ic_back)
+            setPadding(32, 32, 32, 32)
+            setOnClickListener { finish() }
+        }
+        layout.addView(backArrow, LinearLayout.LayoutParams(100, 100))
+        // 알람 리스트
+        val listView = ListView(this)
+        val alarms = listOf("물 줄 시간입니다!", "새로운 식물 등록 알림", "AI 분석 결과가 도착했습니다.")
+        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, alarms)
+        listView.adapter = adapter
+        layout.addView(listView, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1f))
+        setContentView(layout)
     }
 }

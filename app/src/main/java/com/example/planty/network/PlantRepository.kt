@@ -12,7 +12,7 @@ sealed class PlantResult {
 class PlantRepository {
     private val plantService = ApiClient.plantService
 
-    suspend fun registerPlant(name: String, type: String, wateringCycle: Int): Flow<PlantResult> = flow {
+    suspend fun registerPlant(name: String, type: String, wateringCycle: Int, lastWateredDate: String): Flow<PlantResult> = flow {
         try {
             val token = TokenManager.getToken()
             Log.d("PlantRepository", "Using token for plant registration: $token")
@@ -24,7 +24,8 @@ class PlantRepository {
             val request = PlantRegistrationRequest(
                 name = name,
                 type = type,
-                watering_cycle = wateringCycle
+                watering_cycle = wateringCycle,
+                last_watered = lastWateredDate
             )
             val response = plantService.registerPlant(request)
             if (response.isSuccessful) {
@@ -81,6 +82,31 @@ class PlantRepository {
         } catch (e: Exception) {
             Log.e("PlantRepository", "식물 목록 조회 실패", e)
             emit(emptyList())
+        }
+    }
+
+    suspend fun getPlantById(plantId: Int): Plant? {
+        return try {
+            val response = plantService.getPlant(plantId)
+            if (response.isSuccessful) {
+                response.body()?.let { plantResp ->
+                    plantResp.plant?.let { plant ->
+                        Plant(
+                            id = plant.id,
+                            name = plant.name,
+                            type = plant.type,
+                            wateringCycle = plant.wateringCycle,
+                            last_watered = plant.last_watered,
+                            createdAt = plant.createdAt,
+                            ownerId = plant.ownerId
+                        )
+                    }
+                }
+            } else {
+                null
+            }
+        } catch (e: Exception) {
+            null
         }
     }
 }

@@ -9,6 +9,14 @@ import androidx.appcompat.widget.Toolbar
 import com.example.planty.R
 import android.view.View
 import android.widget.FrameLayout
+import androidx.lifecycle.lifecycleScope
+import com.example.planty.network.ApiClient
+import kotlinx.coroutines.launch
+import android.app.Dialog
+import android.view.Window
+import android.view.WindowManager
+import android.webkit.WebView
+import android.webkit.WebViewClient
 
 class PlantDetailActivity : AppCompatActivity() {
     companion object {
@@ -34,6 +42,29 @@ class PlantDetailActivity : AppCompatActivity() {
         setupToolbar()
         getIntentData()
         setupLiveStream()
+
+        // Toolbar 뒤로가기 동작 연결
+        toolbar.setNavigationOnClickListener { onBackPressed() }
+
+        // AI 분석 결과 표시
+        val plantId = intent.getStringExtra(Extra_Plant_ID)?.toIntOrNull()
+        val aiAnalysisTextView = findViewById<TextView>(R.id.tv_ai_analysis)
+        if (plantId != null) {
+            lifecycleScope.launch {
+                try {
+                    val response = ApiClient.plantService.getPlantAIAnalysis(plantId)
+                    if (response.isSuccessful && response.body()?.success == true) {
+                        aiAnalysisTextView.text = response.body()?.analysis_text ?: "AI 분석 결과가 없습니다."
+                    } else {
+                        aiAnalysisTextView.text = "AI 분석 결과를 불러올 수 없습니다."
+                    }
+                } catch (e: Exception) {
+                    aiAnalysisTextView.text = "AI 분석 결과를 불러오는 중 오류 발생."
+                }
+            }
+        } else {
+            aiAnalysisTextView.text = "식물 ID가 올바르지 않습니다."
+        }
     }
 
     private fun initializeViews() {
@@ -84,5 +115,18 @@ class PlantDetailActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    // 실시간 스트리밍 화면 클릭 시 전체화면 WebView Dialog 표시
+    fun onStreamClick(view: View) {
+        val dialog = android.app.Dialog(this, android.R.style.Theme_Black_NoTitleBar_Fullscreen)
+        dialog.requestWindowFeature(android.view.Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(true)
+        val webView = android.webkit.WebView(this)
+        webView.settings.javaScriptEnabled = true
+        webView.webViewClient = android.webkit.WebViewClient()
+        webView.loadUrl("https://planty.gaeun.xyz/image_raw")
+        dialog.setContentView(webView)
+        dialog.show()
     }
 } 

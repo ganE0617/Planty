@@ -20,15 +20,34 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/scrollView"/>
 
-    <ImageView
-        android:id="@+id/iv_lock"
+    <FrameLayout
+        android:fitsSystemWindows='true'
+        android:id="@+id/alarm_icon_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_settings"
-        android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/scrollView"/>
+        app:layout_constraintBottom_toTopOf="@id/scrollView">
+
+        <ImageView
+            android:id="@+id/iv_alarm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_bell"
+            android:padding="16dp"/>
+
+        <TextView
+            android:id="@+id/tv_alarm_badge"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/circle_card_icon_bg"
+            android:textColor="#FFF"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:layout_gravity="end|top"
+            android:visibility="gone"
+            android:text="1"/>
+    </FrameLayout>
 
     <ScrollView
         android:id="@+id/scrollView"

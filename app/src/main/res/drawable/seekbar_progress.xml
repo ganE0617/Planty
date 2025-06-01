@@ -1,16 +1,25 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 비활성 배경 -->
     <item android:id="@android:id/background">
-        <shape>
-            <corners android:radius="8dp"/>
-            <solid android:color="@color/slider_bg"/>
-        </shape>
-    </item>
-    <item android:id="@android:id/progress">
-        <clip>
+        <inset android:left="12dp" android:right="12dp">
             <shape>
-                <corners android:radius="8dp"/>
-                <solid android:color="@color/slider_fill"/>
+                <corners android:radius="12dp"/>
+                <size android:height="6dp"/>
+                <solid android:color="#F5F2ED"/> <!-- 연한 회색 배경 -->
             </shape>
-        </clip>
+        </inset>
     </item>
-</layer-list> 
+
+    <!-- 진행된 부분 -->
+    <item android:id="@android:id/progress">
+        <inset android:left="12dp" android:right="12dp">
+            <clip>
+                <shape>
+                    <corners android:radius="12dp"/>
+                    <size android:height="6dp"/>
+                    <solid android:color="#4A7C59"/> <!-- 초록색 진행 -->
+                </shape>
+            </clip>
+        </inset>
+    </item>
+</layer-list>

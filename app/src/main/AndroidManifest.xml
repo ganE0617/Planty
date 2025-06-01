@@ -36,6 +36,10 @@
             android:exported="true" />
 
         <activity
+            android:name=".AlarmActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".login.LoginActivity"
             android:exported="false" />
 

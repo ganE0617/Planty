@@ -5,6 +5,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
+import com.google.gson.annotations.SerializedName
 
 interface PlantService {
     @POST("plants")
@@ -27,12 +28,24 @@ interface PlantService {
     suspend fun getPlantLed(
         @Path("plant_id") plantId: Int
     ): Response<PlantLedResponse>
+
+    // AI 분석 결과 조회
+    @GET("plants/{plant_id}/ai-analysis")
+    suspend fun getPlantAIAnalysis(
+        @Path("plant_id") plantId: Int
+    ): Response<AIAnalysisResponse>
+
+    @GET("plants/{plant_id}")
+    suspend fun getPlant(
+        @Path("plant_id") plantId: Int
+    ): Response<PlantRegistrationResponse>
 }
 
 data class PlantRegistrationRequest(
     val name: String,
     val type: String,
-    val watering_cycle: Int
+    val watering_cycle: Int,
+    val last_watered: String
 )
 
 data class PlantRegistrationResponse(
@@ -45,9 +58,13 @@ data class PlantResponse(
     val id: Int,
     val name: String,
     val type: String,
+    @SerializedName("watering_cycle")
     val wateringCycle: Int,
+    @SerializedName("last_watered")
     val last_watered: String,
+    @SerializedName("created_at")
     val createdAt: String,
+    @SerializedName("owner_id")
     val ownerId: String
 )
 
@@ -56,11 +73,18 @@ data class PlantLedRequest(
     val mode: String,
     val r: Int,
     val g: Int,
-    val b: Int
+    val b: Int,
+    val strength: Int
 )
 
 data class PlantLedResponse(
     val success: Boolean,
     val message: String,
     val led: PlantLedRequest?
+)
+
+data class AIAnalysisResponse(
+    val success: Boolean,
+    val analysis_text: String?,
+    val created_at: String?
 ) 

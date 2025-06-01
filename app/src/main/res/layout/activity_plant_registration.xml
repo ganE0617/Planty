@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:fitsSystemWindows='true'
     android:background="#FAFAF7">
 
     <com.google.android.material.appbar.MaterialToolbar
@@ -86,6 +87,22 @@
                 android:hint="물주기 주기 (일)"
                 android:inputType="number"
                 android:text="7"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilLastWateredDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etLastWateredDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="마지막으로 물준 날짜"
+                android:focusable="false"
+                android:inputType="date"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <FrameLayout

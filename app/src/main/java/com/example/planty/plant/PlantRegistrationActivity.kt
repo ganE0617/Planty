@@ -11,6 +11,8 @@ import com.example.planty.databinding.ActivityPlantRegistrationBinding
 import com.example.planty.network.PlantRepository
 import com.example.planty.network.PlantResult
 import kotlinx.coroutines.launch
+import android.app.DatePickerDialog
+import java.util.Calendar
 
 class PlantRegistrationActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPlantRegistrationBinding
@@ -34,6 +36,22 @@ class PlantRegistrationActivity : AppCompatActivity() {
         binding.tvWelcome.text = "안녕하세요, ${nickname}님!"
         binding.tvWelcomeSub.text = "첫 식물을 등록해주세요."
 
+        // 날짜 입력란 클릭 시 DatePickerDialog 표시
+        binding.etLastWateredDate.setOnClickListener {
+            val calendar = Calendar.getInstance()
+            val datePicker = DatePickerDialog(
+                this,
+                { _, year, month, dayOfMonth ->
+                    val dateStr = String.format("%04d-%02d-%02d", year, month + 1, dayOfMonth)
+                    binding.etLastWateredDate.setText(dateStr)
+                },
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)
+            )
+            datePicker.show()
+        }
+
         setupClickListeners()
     }
 
@@ -47,6 +65,7 @@ class PlantRegistrationActivity : AppCompatActivity() {
         val plantName = binding.etPlantName.text.toString().trim()
         val plantType = binding.etPlantType.text.toString().trim()
         val wateringCycle = binding.etWateringCycle.text.toString().trim().toIntOrNull() ?: 7
+        val lastWateredDate = binding.etLastWateredDate.text.toString().trim()
 
         if (plantName.isEmpty()) {
             binding.tilPlantName.error = "식물 이름을 입력해주세요."
@@ -69,6 +88,13 @@ class PlantRegistrationActivity : AppCompatActivity() {
             binding.tilWateringCycle.error = null
         }
 
+        if (lastWateredDate.isEmpty()) {
+            binding.tilLastWateredDate.error = "마지막으로 물준 날짜를 입력해주세요."
+            return
+        } else {
+            binding.tilLastWateredDate.error = null
+        }
+
         // Show loading state
         binding.btnRegisterPlant.isEnabled = false
         binding.progressBar.show()
@@ -77,7 +103,8 @@ class PlantRegistrationActivity : AppCompatActivity() {
             plantRepository.registerPlant(
                 name = plantName,
                 type = plantType,
-                wateringCycle = wateringCycle
+                wateringCycle = wateringCycle,
+                lastWateredDate = lastWateredDate
             ).collect { result ->
                 // Hide loading state
                 binding.btnRegisterPlant.isEnabled = true

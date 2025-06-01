@@ -1,0 +1,19 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Glow -->
+    <item android:top="2dp" android:bottom="8dp"> <!-- 아래쪽을 길게 해서 위로 올라와 보이게 -->
+        <shape android:shape="oval">
+            <size android:width="36dp" android:height="36dp"/>
+            <solid android:color="#33FFFFFF"/>
+        </shape>
+    </item>
+
+    <!-- Thumb -->
+    <item android:left="6dp" android:top="6dp" android:right="6dp" android:bottom="6dp">
+        <shape android:shape="oval">
+            <size android:width="24dp" android:height="24dp"/>
+            <solid android:color="#4A7C59"/>
+            <stroke android:width="4dp" android:color="#FFFFFF"/>
+        </shape>
+    </item>
+</layer-list>

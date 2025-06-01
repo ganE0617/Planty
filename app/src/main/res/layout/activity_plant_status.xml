@@ -5,261 +5,334 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows='true'
-    android:background="#F5F6F8">
+    android:background="@android:color/white"
+    android:fitsSystemWindows="true"
+    tools:context=".plantdetail.PlantStatusActivity">
 
-    <!-- 실시간 스트리밍 영역 (상단 절반) -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@android:color/white"
+        android:elevation="4dp"
+        app:navigationIcon="@drawable/ic_back"
+        app:titleTextColor="#222"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <FrameLayout
         android:id="@+id/video_container"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintDimensionRatio="16:9">
-
+        app:layout_constraintDimensionRatio="16:9"
+        android:layout_marginTop="0dp">
         <WebView
             android:id="@+id/web_stream"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </FrameLayout>
 
-    <!-- 별명 (Extra Bold, 왼쪽 정렬) -->
-    <TextView
-        android:id="@+id/tv_nickname"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:fontFamily="@font/inter_18pt_extrabold"
-        android:textColor="@color/textPrimary"
-        android:gravity="start"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:scrollbars="vertical"
+        android:fitsSystemWindows="false"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintTop_toBottomOf="@id/video_container"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="24dp"
-        android:layout_marginStart="24dp"
-        tools:text="토토"/>
+        app:layout_constraintBottom_toBottomOf="parent">
 
-    <!-- 종류 (고정폭, 작게, 왼쪽 정렬) -->
-    <TextView
-        android:id="@+id/tv_type"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textSize="13sp"
-        android:fontFamily="monospace"
-        android:textColor="@color/textSecondary"
-        android:gravity="start"
-        app:layout_constraintTop_toBottomOf="@id/tv_nickname"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="2dp"
-        android:layout_marginStart="24dp"
-        tools:text="방울토마토"/>
-
-    <TextView
-        android:id="@+id/card_list_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="정보"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        android:fontFamily="@font/inter_18pt_bold"
-        android:textColor="@color/textPrimary"
-        android:layout_marginTop="24dp"
-        app:layout_constraintTop_toBottomOf="@+id/tv_type"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="16dp"/>
-
-    <!-- 정보 카드 1: 물 주는 날 (CardView, 327x72dp, 왼쪽정렬) -->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_water"
-        android:layout_width="327dp"
-        android:layout_height="72dp"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="6dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintTop_toBottomOf="@+id/card_list_title"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="24dp"
-        android:backgroundTint="@color/card">
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp">
-            <FrameLayout
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/circle_card_icon_bg">
-                <ImageView
-                    android:src="@drawable/lets_icons_water"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_gravity="center"/>
-            </FrameLayout>
-            <LinearLayout
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="false"
+            android:background="#F5F6F8"
+            android:paddingBottom="32dp"
+            tools:context=".plantdetail.PlantStatusActivity">
+
+            <!-- 별명 -->
+            <TextView
+                android:id="@+id/tv_nickname"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/inter_18pt_extrabold"
+                android:textColor="@color/textPrimary"
+                android:gravity="start"
+                android:layout_marginTop="20dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/video_container"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                tools:text="토토"/>
+
+            <!-- 종류 -->
+            <TextView
+                android:id="@+id/tv_type"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:fontFamily="monospace"
+                android:textColor="@color/textSecondary"
+                android:gravity="start"
+                app:layout_constraintTop_toBottomOf="@id/tv_nickname"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="2dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                tools:text="방울토마토"/>
+
+            <TextView
+                android:id="@+id/card_list_title"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center_vertical"
-                android:layout_marginStart="12dp">
-                <TextView
-                    android:id="@+id/tv_water_day"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="D-7"
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:textColor="@color/textPrimary"
-                    android:fontFamily="@font/inter_18pt_bold"
-                    android:gravity="start"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="물 주는 날"
-                    android:textColor="@color/textSecondary"
-                    android:textSize="13sp"
-                    android:fontFamily="@font/inter_18pt_regular"
-                    android:gravity="start"/>
-            </LinearLayout>
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+                android:layout_height="wrap_content"
+                android:text="정보"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/inter_18pt_bold"
+                android:textColor="@color/textPrimary"
+                android:layout_marginTop="24dp"
+                app:layout_constraintTop_toBottomOf="@+id/tv_type"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp"/>
 
+            <!-- 정보 카드 1: 물 주는 날 -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_water"
+                android:layout_width="0dp"
+                android:layout_height="72dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="6dp"
+                android:layout_marginTop="24dp"
+                app:layout_constraintTop_toBottomOf="@+id/card_list_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:backgroundTint="@color/card">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp">
+                    <FrameLayout
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/circle_card_icon_bg">
+                        <ImageView
+                            android:src="@drawable/lets_icons_water"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"/>
+                    </FrameLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center_vertical"
+                        android:layout_marginStart="12dp">
+                        <TextView
+                            android:id="@+id/tv_water_day"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="D-7"
+                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            android:textColor="@color/textPrimary"
+                            android:fontFamily="@font/inter_18pt_bold"
+                            android:gravity="start"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="물 주는 날"
+                            android:textColor="@color/textSecondary"
+                            android:textSize="13sp"
+                            android:fontFamily="@font/inter_18pt_regular"
+                            android:gravity="start"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-    <!-- 정보 카드 2: 토양 습도 (CardView, 327x72dp, 왼쪽정렬) -->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_soil"
-        android:layout_width="327dp"
-        android:layout_height="72dp"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="6dp"
-        android:layout_marginTop="12dp"
-        app:layout_constraintTop_toBottomOf="@id/card_water"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="24dp"
-        android:backgroundTint="@color/card">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp">
-            <FrameLayout
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/circle_card_icon_bg">
-                <ImageView
-                    android:src="@drawable/carbon_soil_moisture"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_gravity="center"/>
-            </FrameLayout>
-            <LinearLayout
+            <!-- 정보 카드 2: 토양 습도 -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_soil"
+                android:layout_width="0dp"
+                android:layout_height="72dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="6dp"
+                android:layout_marginTop="12dp"
+                app:layout_constraintTop_toBottomOf="@id/card_water"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:backgroundTint="@color/card">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp">
+                    <FrameLayout
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/circle_card_icon_bg">
+                        <ImageView
+                            android:src="@drawable/carbon_soil_moisture"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"/>
+                    </FrameLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center_vertical"
+                        android:layout_marginStart="12dp">
+                        <TextView
+                            android:id="@+id/tv_soil_percent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="60%"
+                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            android:textColor="@color/textPrimary"
+                            android:fontFamily="@font/inter_18pt_bold"
+                            android:gravity="start"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="토양 습도"
+                            android:textColor="@color/textSecondary"
+                            android:textSize="13sp"
+                            android:fontFamily="@font/inter_18pt_regular"
+                            android:gravity="start"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/tv_ai_analysis_title"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center_vertical"
-                android:layout_marginStart="12dp">
-                <TextView
-                    android:id="@+id/tv_soil_percent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="60%"
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:textColor="@color/textPrimary"
-                    android:fontFamily="@font/inter_18pt_bold"
-                    android:gravity="start"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="토양 습도"
-                    android:textColor="@color/textSecondary"
-                    android:textSize="13sp"
-                    android:fontFamily="@font/inter_18pt_regular"
-                    android:gravity="start"/>
+                android:layout_height="wrap_content"
+                android:text="AI 건강 진단"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/textPrimary"
+                android:layout_marginTop="24dp"
+                app:layout_constraintTop_toBottomOf="@+id/card_soil"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="24dp"/>
+
+            <TextView
+                android:id="@+id/tv_ai_analysis"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:text="AI 분석 결과가 여기에 표시됩니다."
+                android:textSize="15sp"
+                android:textColor="#333333"
+                android:background="#10FFFFFF"
+                android:padding="12dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_ai_analysis_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <!-- LED 모드 제목 -->
+            <TextView
+                android:id="@+id/tv_led_mode_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="LED 모드"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/inter_18pt_bold"
+                android:textColor="@color/textPrimary"
+                android:gravity="start"
+                android:layout_marginTop="24dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_ai_analysis"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="24dp"/>
+
+            <!-- LED 모드 Tab -->
+            <LinearLayout
+                android:id="@+id/led_mode_tab"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="12dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_led_mode_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:gravity="center">
+                <Button android:id="@+id/btn_mode_default" style="@style/FigmaButton" android:layout_width="72dp" android:layout_height="36dp" android:text="통합" android:layout_marginEnd="8dp"/>
+                <Button android:id="@+id/btn_mode_leaf" style="@style/FigmaButton" android:layout_width="72dp" android:layout_height="36dp" android:text="잎 성장" android:layout_marginEnd="8dp"/>
+                <Button android:id="@+id/btn_mode_flower" style="@style/FigmaButton" android:layout_width="72dp" android:layout_height="36dp" android:text="개화" android:layout_marginEnd="8dp"/>
+                <Button android:id="@+id/btn_mode_fruit" style="@style/FigmaButton" android:layout_width="72dp" android:layout_height="36dp" android:text="열매" android:layout_marginEnd="8dp"/>
+                <Button android:id="@+id/btn_mode_seed" style="@style/FigmaButton" android:layout_width="72dp" android:layout_height="36dp" android:text="줄기"/>
             </LinearLayout>
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
 
-    <!-- LED 모드 제목 (Bold, 중앙 정렬) -->
-    <TextView
-        android:id="@+id/tv_led_mode_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="LED 모드"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        android:fontFamily="@font/inter_18pt_bold"
-        android:textColor="@color/textPrimary"
-        android:gravity="start"
-        android:layout_marginTop="24dp"
-        app:layout_constraintTop_toBottomOf="@id/card_soil"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="24dp"/>
+            <!-- 빛 강도(LED) 타이틀과 슬라이더 간격 넓힘 -->
+            <TextView
+                android:id="@+id/tv_led_strength"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="LED 밝기"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/inter_18pt_bold"
+                android:textColor="@color/textPrimary"
+                android:layout_marginTop="32dp"
+                app:layout_constraintTop_toBottomOf="@id/led_mode_tab"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="24dp"/>
 
-    <!-- LED 모드 Tab (버튼, 연한 초록/진한 초록, 둥근, 마진 8dp) -->
-    <LinearLayout
-        android:id="@+id/led_mode_tab"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="12dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintTop_toBottomOf="@id/tv_led_mode_title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:gravity="center">
-        <Button android:id="@+id/btn_mode_default" style="@style/FigmaButton" android:layout_width="72dp" android:layout_height="36dp" android:text="통합" android:layout_marginEnd="8dp"/>
-        <Button android:id="@+id/btn_mode_leaf" style="@style/FigmaButton" android:layout_width="72dp" android:layout_height="36dp" android:text="잎 성장" android:layout_marginEnd="8dp"/>
-        <Button android:id="@+id/btn_mode_flower" style="@style/FigmaButton" android:layout_width="72dp" android:layout_height="36dp" android:text="개화" android:layout_marginEnd="8dp"/>
-        <Button android:id="@+id/btn_mode_fruit" style="@style/FigmaButton" android:layout_width="72dp" android:layout_height="36dp" android:text="열매" android:layout_marginEnd="8dp"/>
-        <Button android:id="@+id/btn_mode_seed" style="@style/FigmaButton" android:layout_width="72dp" android:layout_height="36dp" android:text="줄기"/>
-    </LinearLayout>
+            <SeekBar
+                android:id="@+id/seekbar_led"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:max="100"
+                android:progress="50"
+                android:progressDrawable="@drawable/seekbar_progress"
+                android:thumb="@drawable/seekbar_thumb_large"
+                android:clipToPadding="false"
+                android:background="@android:color/transparent"
+                app:layout_constraintTop_toBottomOf="@id/tv_led_strength"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="12dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="60dp"
+                android:layout_marginBottom="60dp"/>
 
-    <!-- LED 강도 슬라이더 -->
-    <TextView
-        android:id="@+id/tv_led_strength"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="빛 강도"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        android:fontFamily="@font/inter_18pt_bold"
-        android:textColor="@color/textPrimary"
-        android:layout_marginTop="24dp"
-        app:layout_constraintTop_toBottomOf="@id/led_mode_tab"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="16dp"/>
+            <TextView
+                android:id="@+id/tv_led_percent"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:textSize="14sp"
+                android:fontFamily="@font/inter_18pt_bold"
+                android:textColor="@color/textSecondary"
+                app:layout_constraintTop_toTopOf="@id/tv_led_strength"
+                app:layout_constraintBottom_toBottomOf="@id/tv_led_strength"
+                app:layout_constraintStart_toEndOf="@id/tv_led_strength"
+                android:layout_marginStart="8dp"/>
+            
 
-    <SeekBar
-        android:id="@+id/seekbar_led"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:max="100"
-        android:progress="50"
-        android:progressDrawable="@drawable/seekbar_progress"
-        android:thumb="@drawable/seekbar_thumb"
-        app:layout_constraintTop_toBottomOf="@id/tv_led_strength"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="60dp"/>
-
-    <TextView
-        android:id="@+id/tv_led_percent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:fontFamily="@font/inter_18pt_bold"
-        android:textColor="@color/textSecondary"
-        app:layout_constraintTop_toBottomOf="@id/tv_led_strength"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="16dp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout> 
