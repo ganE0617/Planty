@@ -110,10 +110,10 @@
                 android:layout_marginBottom="8dp">
 
                 <TextView
-                    android:id="@+id/tv_recommended_title"
+                    android:id="@+id/tv_community_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/recommended_items"
+                    android:text="식집사 커뮤니티"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="@android:color/black"
@@ -122,11 +122,11 @@
                     app:layout_constraintBottom_toBottomOf="parent"/>
 
                 <TextView
-                    android:id="@+id/tv_recommended_see_more"
+                    android:id="@+id/tv_community_see_more"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/see_more"
-                    android:textColor="@android:color/darker_gray"
+                    android:text="더보기"
+                    android:textColor="#4F704F"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"/>
@@ -134,15 +134,14 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_my_plantsss"
+                android:id="@+id/rv_community_preview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_plant_card"
-                android:layout_marginBottom="24dp">
-
-            </androidx.recyclerview.widget.RecyclerView>
+                tools:listitem="@layout/item_community_preview"
+                android:layout_marginBottom="24dp"
+                android:maxHeight="300dp" />
 
         </LinearLayout>
     </ScrollView>

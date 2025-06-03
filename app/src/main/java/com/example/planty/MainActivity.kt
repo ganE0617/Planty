@@ -23,6 +23,8 @@ import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.LinearLayout
 import android.widget.ImageView
+import com.example.planty.adapter.CommunityPreviewAdapter
+import com.example.planty.data.CommunityPost
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,6 +32,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var plantAdapter: PlantAdapter
     private val plantDataList = mutableListOf<Plant>()
     private val plantRepository = PlantRepository()
+    private lateinit var communityPreviewAdapter: CommunityPreviewAdapter
+    private val communityPreviewList = mutableListOf<CommunityPost>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +42,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupRecyclerView()
+        setupCommunityPreviewRecyclerView()
         loadPlants()
         setupOtherClickListeners()
 
@@ -151,6 +156,36 @@ class MainActivity : AppCompatActivity() {
         Log.d("MainActivity", "RecyclerView 설정 완료. 아이템 개수: ${plantAdapter.itemCount}")
     }
 
+    private fun setupCommunityPreviewRecyclerView() {
+        // 더미 데이터 2개만
+        communityPreviewList.clear()
+        communityPreviewList.addAll(
+            listOf(
+                CommunityPost(
+                    id = 1,
+                    title = "처음 열매 나왔어요!",
+                    content = "혼자 잘 자라네요 ㅎㅎ",
+                    imageResId = R.drawable.tlranf,
+                    likeCount = 3,
+                    commentCount = 2
+                ),
+                CommunityPost(
+                    id = 2,
+                    title = "영양제 같이 사실분!",
+                    content = "방울토마토 전용 무럭무럭",
+                    imageResId = R.drawable.tlranf,
+                    likeCount = 2,
+                    commentCount = 1
+                )
+            )
+        )
+        communityPreviewAdapter = CommunityPreviewAdapter(communityPreviewList) { post ->
+            // TODO: 상세보기로 이동
+            Toast.makeText(this, "클릭: ${'$'}{post.title}", Toast.LENGTH_SHORT).show()
+        }
+        binding.rvCommunityPreview.adapter = communityPreviewAdapter
+    }
+
     private fun setupOtherClickListeners() {
         binding.ivSearch.setOnClickListener {
             Toast.makeText(this, "검색 클릭됨 (구현 필요)", Toast.LENGTH_SHORT).show()
@@ -158,8 +193,10 @@ class MainActivity : AppCompatActivity() {
         binding.tvMyPlantsSeeMore.setOnClickListener {
             Toast.makeText(this, "'내 식물 더보기' 클릭됨 (구현 필요)", Toast.LENGTH_SHORT).show()
         }
-        binding.tvRecommendedSeeMore.setOnClickListener {
-            Toast.makeText(this, "'추천 용품 더보기' 클릭됨 (구현 필요)", Toast.LENGTH_SHORT).show()
+        binding.tvCommunitySeeMore.setOnClickListener {
+            // CommunityActivity로 이동
+            val intent = Intent(this, CommunityActivity::class.java)
+            startActivity(intent)
         }
     }
 

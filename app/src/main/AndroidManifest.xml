@@ -35,6 +35,10 @@
             android:name=".MainActivity"
             android:exported="true" />
 
+        <activity android:name=".CommunityActivity" />
+        <activity android:name=".CommunityWriteActivity" />
+        <activity android:name=".CommunityDetailActivity" />
+
         <activity
             android:name=".AlarmActivity"
             android:exported="false" />
