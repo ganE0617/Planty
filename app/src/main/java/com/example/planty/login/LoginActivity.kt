@@ -9,11 +9,13 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.planty.MainActivity
+import com.example.planty.R
 import com.example.planty.databinding.ActivityLoginBinding
 import com.example.planty.network.AuthRepository
 import com.example.planty.network.AuthResult
 import com.example.planty.plant.PlantRegistrationActivity
 import kotlinx.coroutines.launch
+import android.widget.TextView
 
 class LoginActivity : AppCompatActivity() {
 
@@ -40,6 +42,7 @@ class LoginActivity : AppCompatActivity() {
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setEditTextCursorColor()
         setupClickListeners()
     }
 
@@ -171,6 +174,23 @@ class LoginActivity : AppCompatActivity() {
                     is AuthResult.Error -> {
                         Toast.makeText(this@LoginActivity, result.message, Toast.LENGTH_SHORT).show()
                     }
+                }
+            }
+        }
+    }
+
+    private fun setEditTextCursorColor() {
+        val editTexts = listOf(binding.etId, binding.etPassword)
+        for (editText in editTexts) {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+                editText.textCursorDrawable = getDrawable(R.drawable.edittext_cursor_green)
+            } else {
+                try {
+                    val f = TextView::class.java.getDeclaredField("mCursorDrawableRes")
+                    f.isAccessible = true
+                    f.set(editText, R.drawable.edittext_cursor_green)
+                } catch (e: Exception) {
+                    // ignore
                 }
             }
         }

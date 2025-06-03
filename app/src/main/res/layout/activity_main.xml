@@ -85,7 +85,7 @@
                     android:id="@+id/tv_my_plants_see_more"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/see_more"
+                    android:text="@string/add_plant"
                     android:textColor="@android:color/darker_gray"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"

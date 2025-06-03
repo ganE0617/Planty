@@ -15,7 +15,12 @@ class PlantAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(plant: Plant) {
-            binding.ivPlantImage.setImageResource(plant.imageResId)
+            binding.webPlantStream.settings.javaScriptEnabled = true
+            binding.webPlantStream.settings.useWideViewPort = true
+            binding.webPlantStream.settings.loadWithOverviewMode = true
+            binding.webPlantStream.webViewClient = android.webkit.WebViewClient()
+            binding.webPlantStream.loadUrl("https://planty.gaeun.xyz/image_raw") // TODO: Use plant-specific URL if available
+
             binding.tvPlantName.text = plant.name
             binding.tvPlantStatus.text = plant.status
 

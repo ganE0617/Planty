@@ -51,6 +51,10 @@
             android:name=".plant.PlantRegistrationActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".plant.PotScanActivity"
+            android:exported="false" />
+
         <!-- Settings Activities -->
         <activity
             android:name=".settings.SettingsActivity"

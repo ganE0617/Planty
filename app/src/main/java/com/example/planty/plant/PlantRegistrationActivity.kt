@@ -97,7 +97,6 @@ class PlantRegistrationActivity : AppCompatActivity() {
 
         // Show loading state
         binding.btnRegisterPlant.isEnabled = false
-        binding.progressBar.show()
 
         lifecycleScope.launch {
             plantRepository.registerPlant(
@@ -108,13 +107,13 @@ class PlantRegistrationActivity : AppCompatActivity() {
             ).collect { result ->
                 // Hide loading state
                 binding.btnRegisterPlant.isEnabled = true
-                binding.progressBar.hide()
 
                 when (result) {
                     is PlantResult.Success -> {
                         Toast.makeText(this@PlantRegistrationActivity, "식물이 등록되었습니다!", Toast.LENGTH_SHORT).show()
-                        // Navigate to main screen
-                        val intent = Intent(this@PlantRegistrationActivity, MainActivity::class.java)
+                        // Navigate to PotScanActivity instead of MainActivity
+                        val intent = Intent(this@PlantRegistrationActivity, PotScanActivity::class.java)
+                        intent.putExtra("plant_nickname", plantName)
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         startActivity(intent)
                         finish()

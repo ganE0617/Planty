@@ -85,6 +85,9 @@ dependencies {
     
     // Glide dependencies
     implementation("com.github.bumptech.glide:glide:4.16.0")
+
+    // Lottie for animation
+    implementation("com.airbnb.android:lottie:6.4.0")
     
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

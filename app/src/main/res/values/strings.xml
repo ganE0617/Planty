@@ -71,7 +71,8 @@
     <string name="apply">적용</string>
 
     <string name="my_plants">내 식물</string>
-    <string name="see_more">See more</string>
+    <string name="see_more">더 보기</string>
+    <string name="add_plant">식물 등록하기</string>
     <string name="recommended_items">추천 용품</string>
     <string name="notification_receive">알림 수신</string>
 

@@ -13,6 +13,7 @@ import com.example.planty.network.AuthRepository
 import com.example.planty.network.AuthResult
 import com.example.planty.plant.PlantRegistrationActivity
 import kotlinx.coroutines.launch
+import android.widget.TextView
 
 class SignUpActivity : AppCompatActivity() {
 
@@ -23,8 +24,25 @@ class SignUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySignupBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        setEditTextCursorColor()
         setupClickListeners()
+    }
+
+    private fun setEditTextCursorColor() {
+        val editTexts = listOf(binding.etNickname, binding.etEmail, binding.etPasswordSignup, binding.etPasswordConfirm)
+        for (editText in editTexts) {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+                editText.textCursorDrawable = getDrawable(R.drawable.edittext_cursor_green)
+            } else {
+                try {
+                    val f = TextView::class.java.getDeclaredField("mCursorDrawableRes")
+                    f.isAccessible = true
+                    f.set(editText, R.drawable.edittext_cursor_green)
+                } catch (e: Exception) {
+                    // ignore
+                }
+            }
+        }
     }
 
     private fun setupClickListeners() {

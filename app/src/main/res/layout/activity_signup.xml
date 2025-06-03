@@ -45,7 +45,9 @@
             app:shapeAppearanceOverlay="@style/ShapeAppearance.App.TextInputLayout.Rounded"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_nickname">
+            app:layout_constraintTop_toBottomOf="@+id/tv_nickname"
+            app:boxStrokeColor="@color/primary"
+            app:hintTextColor="@color/primary">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_nickname"
@@ -53,7 +55,8 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_nickname"
                 android:inputType="textPersonName"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:textCursorDrawable="@drawable/edittext_cursor_green" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- ✅ 이메일 -->
@@ -78,7 +81,9 @@
             app:shapeAppearanceOverlay="@style/ShapeAppearance.App.TextInputLayout.Rounded"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_email">
+            app:layout_constraintTop_toBottomOf="@+id/tv_email"
+            app:boxStrokeColor="@color/primary"
+            app:hintTextColor="@color/primary">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_email"
@@ -86,7 +91,8 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_email"
                 android:inputType="textEmailAddress"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:textCursorDrawable="@drawable/edittext_cursor_green" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -111,7 +117,9 @@
             app:shapeAppearanceOverlay="@style/ShapeAppearance.App.TextInputLayout.Rounded"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_password">
+            app:layout_constraintTop_toBottomOf="@+id/tv_password"
+            app:boxStrokeColor="@color/primary"
+            app:hintTextColor="@color/primary">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_password_signup"
@@ -119,7 +127,8 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_password_signup"
                 android:inputType="textPassword"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:textCursorDrawable="@drawable/edittext_cursor_green" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -144,7 +153,9 @@
             app:shapeAppearanceOverlay="@style/ShapeAppearance.App.TextInputLayout.Rounded"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_password_confirm">
+            app:layout_constraintTop_toBottomOf="@+id/tv_password_confirm"
+            app:boxStrokeColor="@color/primary"
+            app:hintTextColor="@color/primary">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_password_confirm"
@@ -152,17 +163,15 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_password_confirm"
                 android:inputType="textPassword"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:textCursorDrawable="@drawable/edittext_cursor_green" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btn_signup_action"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            style="@style/PlantyRectangleButton"
             android:layout_marginTop="32dp"
             android:text="@string/button_signup_action"
-            android:backgroundTint="#557b5c"
-            android:textColor="@android:color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/til_password_confirm" />

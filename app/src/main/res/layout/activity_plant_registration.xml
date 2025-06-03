@@ -48,14 +48,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxStrokeColor="#4A7C59"
+            app:hintTextColor="#4A7C59">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etPlantName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="식물 이름"
-                android:inputType="text"/>
+                android:inputType="text"
+                android:textCursorDrawable="@drawable/edittext_cursor_green"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -63,14 +66,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxStrokeColor="#4A7C59"
+            app:hintTextColor="#4A7C59">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etPlantType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="식물 종류"
-                android:inputType="text"/>
+                android:inputType="text"
+                android:textCursorDrawable="@drawable/edittext_cursor_green"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -78,7 +84,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxStrokeColor="#4A7C59"
+            app:hintTextColor="#4A7C59">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etWateringCycle"
@@ -86,7 +94,8 @@
                 android:layout_height="wrap_content"
                 android:hint="물주기 주기 (일)"
                 android:inputType="number"
-                android:text="7"/>
+                android:text="7"
+                android:textCursorDrawable="@drawable/edittext_cursor_green"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -94,7 +103,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxStrokeColor="#4A7C59"
+            app:hintTextColor="#4A7C59">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etLastWateredDate"
@@ -102,22 +113,21 @@
                 android:layout_height="wrap_content"
                 android:hint="마지막으로 물준 날짜"
                 android:focusable="false"
-                android:inputType="date"/>
+                android:inputType="date"
+                android:textCursorDrawable="@drawable/edittext_cursor_green"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <FrameLayout
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnRegisterPlant"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                style="@style/PlantyRectangleButton"
                 android:text="식물 등록하기"
                 android:textSize="16sp"
                 android:padding="12dp"
-                app:cornerRadius="8dp"
-                android:backgroundTint="#5B7553"/>
+                app:cornerRadius="12dp"/>
 
             <com.google.android.material.progressindicator.CircularProgressIndicator
                 android:id="@+id/progressBar"
@@ -128,6 +138,6 @@
                 app:indicatorColor="#FFFFFF"
                 android:visibility="gone"/>
 
-        </FrameLayout>
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout> 

@@ -57,4 +57,13 @@
         <item name="android:padding">12dp</item>
         <item name="android:radius">16dp</item>
     </style>
+
+    <style name="PlantyRectangleButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:background">@drawable/bg_scan_button</item>
+        <item name="android:backgroundTint">@null</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">16sp</item>
+    </style>
 </resources> 

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:lottie="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp">
+
+    <LinearLayout
+        android:id="@+id/guideTextContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="48dp">
+
+        <TextView
+            android:id="@+id/tvScanGuide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="24sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/tvScanGuide2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"/>
+    </LinearLayout>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottieScan"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        lottie:lottie_rawRes="@raw/scan_loading"
+        lottie:lottie_autoPlay="false"
+        lottie:lottie_loop="true"
+        app:layout_constraintTop_toBottomOf="@id/guideTextContainer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="48dp"
+        android:layout_marginBottom="48dp"/>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottieCheck"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        lottie:lottie_rawRes="@raw/check_success"
+        lottie:lottie_autoPlay="false"
+        lottie:lottie_loop="false"
+        app:layout_constraintTop_toBottomOf="@id/guideTextContainer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="48dp"
+        android:layout_marginBottom="48dp"
+        android:visibility="invisible"/>
+
+    <Button
+        android:id="@+id/btnScan"
+        android:layout_width="327dp"
+        android:layout_height="48dp"
+        android:text="스캔하기"
+        android:background="@drawable/bg_scan_button"
+        android:backgroundTint="@null"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout> 
